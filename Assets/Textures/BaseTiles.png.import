@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://hvsw6wtquesp"
-path="res://.godot/imported/BaseTiles.png-53ee4dc53d0c0ed2154291d2308b8cf7.ctex"
+path="res://.godot/imported/BaseTiles.png-3103b15afbbdd54dd479127ad16f7b81.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://src/Assets/Textures/BaseTiles.png"
-dest_files=["res://.godot/imported/BaseTiles.png-53ee4dc53d0c0ed2154291d2308b8cf7.ctex"]
+source_file="res://Assets/Textures/BaseTiles.png"
+dest_files=["res://.godot/imported/BaseTiles.png-3103b15afbbdd54dd479127ad16f7b81.ctex"]
 
 [params]
 
