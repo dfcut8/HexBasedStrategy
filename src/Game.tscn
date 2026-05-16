@@ -2,6 +2,7 @@
 
 [ext_resource type="TileSet" uid="uid://c7yajr885fmuk" path="res://src/Tilesets/BaseTileset.tres" id="1_2c5w0"]
 [ext_resource type="Script" uid="uid://305vm0gurdod" path="res://src/HexTileMap.cs" id="1_kqvf5"]
+[ext_resource type="TileSet" uid="uid://di4yv0nmj6pwy" path="res://src/Tilesets/OverlayTileset.tres" id="3_lqjwq"]
 
 [node name="Game" type="Node" unique_id=692662400]
 
@@ -12,7 +13,7 @@ script = ExtResource("1_kqvf5")
 tile_set = ExtResource("1_2c5w0")
 
 [node name="BorderLayer" type="TileMapLayer" parent="HexTileMap" unique_id=1902927513]
-tile_set = ExtResource("1_2c5w0")
+tile_set = ExtResource("3_lqjwq")
 
 [node name="OverlayLayer" type="TileMapLayer" parent="HexTileMap" unique_id=1488547915]
 tile_set = ExtResource("1_2c5w0")
