@@ -1,0 +1,16 @@
+[gd_scene format=3 uid="uid://7co1wn8pl53r"]
+
+[ext_resource type="TileSet" uid="uid://c7yajr885fmuk" path="res://src/Tilesets/BaseTiles.tres" id="1_2c5w0"]
+
+[node name="Game" type="Node" unique_id=692662400]
+
+[node name="HexTileMap" type="Node2D" parent="." unique_id=1144206204]
+
+[node name="BaseLayer" type="TileMapLayer" parent="HexTileMap" unique_id=2133624186]
+tile_set = ExtResource("1_2c5w0")
+
+[node name="BorderLayer" type="TileMapLayer" parent="HexTileMap" unique_id=1902927513]
+tile_set = ExtResource("1_2c5w0")
+
+[node name="OverlayLayer" type="TileMapLayer" parent="HexTileMap" unique_id=1488547915]
+tile_set = ExtResource("1_2c5w0")
