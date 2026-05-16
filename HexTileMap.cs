@@ -1,4 +1,7 @@
 using Godot;
+using HexBasedStrategy.Core;
+
+namespace HexBasedStrategy;
 
 public partial class HexTileMap : Node2D
 {
@@ -33,5 +36,6 @@ public partial class HexTileMap : Node2D
                 BorderLayer.SetCell(new Vector2I(x, y), 0, new Vector2I(0, 0));
             }
         }
+        GlobalEvents.MapGenerationCompleted?.Invoke();
     }
 }

@@ -1,4 +1,6 @@
+using System;
 using Godot;
+using HexBasedStrategy.Core;
 
 namespace HexBasedStrategy;
 
@@ -24,7 +26,20 @@ public partial class Camera : Camera2D
         topBound,
         bottomBound;
 
-    public override void _Ready() { }
+    public override void _Ready()
+    {
+        GlobalEvents.MapGenerationCompleted += OnMapGenerationCompleted;
+    }
+
+    public override void _ExitTree()
+    {
+        GlobalEvents.MapGenerationCompleted -= OnMapGenerationCompleted;
+    }
+
+    private void OnMapGenerationCompleted()
+    {
+        throw new NotImplementedException();
+    }
 
     public override void _PhysicsProcess(double delta)
     {
