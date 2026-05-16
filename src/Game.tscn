@@ -1,8 +1,10 @@
 [gd_scene format=3 uid="uid://7co1wn8pl53r"]
 
-[ext_resource type="TileSet" uid="uid://c7yajr885fmuk" path="res://src/Tilesets/BaseTiles.tres" id="1_2c5w0"]
+[ext_resource type="TileSet" uid="uid://c7yajr885fmuk" path="res://src/Tilesets/BaseTileset.tres" id="1_2c5w0"]
+[ext_resource type="Script" uid="uid://b17j34s5fu6wl" path="res://src/Game.cs" id="1_kqvf5"]
 
 [node name="Game" type="Node" unique_id=692662400]
+script = ExtResource("1_kqvf5")
 
 [node name="HexTileMap" type="Node2D" parent="." unique_id=1144206204]
 
