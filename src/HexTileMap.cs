@@ -15,8 +15,8 @@ public partial class HexTileMap : Node2D
     public override void _Ready()
     {
         BaseLayer = GetNode<TileMapLayer>("BaseLayer");
-        BaseLayer = GetNode<TileMapLayer>("BorderLayer");
-        BaseLayer = GetNode<TileMapLayer>("OverlayLayer");
+        BorderLayer = GetNode<TileMapLayer>("BorderLayer");
+        OverlayLayer = GetNode<TileMapLayer>("OverlayLayer");
 
         GenerateTerrain();
     }
@@ -30,6 +30,7 @@ public partial class HexTileMap : Node2D
             for (int y = 0; y < Height; y++)
             {
                 BaseLayer.SetCell(new Vector2I(x, y), 0, new Vector2I(0, 0));
+                BorderLayer.SetCell(new Vector2I(x, y), 0, new Vector2I(0, 0));
             }
         }
     }
