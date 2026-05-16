@@ -1,12 +1,20 @@
-﻿Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2012
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 18
+VisualStudioVersion = 18.6.11806.211 stable
+MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HexBasedStrategy", "HexBasedStrategy.csproj", "{718B7A3E-F011-4C26-95DA-BE1B6571AE2E}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{79D65578-0B56-4B9C-B01A-CD227711FA01}"
+	ProjectSection(SolutionItems) = preProject
+		.gitignore = .gitignore
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
-	Debug|Any CPU = Debug|Any CPU
-	ExportDebug|Any CPU = ExportDebug|Any CPU
-	ExportRelease|Any CPU = ExportRelease|Any CPU
+		Debug|Any CPU = Debug|Any CPU
+		ExportDebug|Any CPU = ExportDebug|Any CPU
+		ExportRelease|Any CPU = ExportRelease|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{718B7A3E-F011-4C26-95DA-BE1B6571AE2E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
@@ -15,5 +23,11 @@ Global
 		{718B7A3E-F011-4C26-95DA-BE1B6571AE2E}.ExportDebug|Any CPU.Build.0 = ExportDebug|Any CPU
 		{718B7A3E-F011-4C26-95DA-BE1B6571AE2E}.ExportRelease|Any CPU.ActiveCfg = ExportRelease|Any CPU
 		{718B7A3E-F011-4C26-95DA-BE1B6571AE2E}.ExportRelease|Any CPU.Build.0 = ExportRelease|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {25EC8B6F-77D8-4578-949C-AE5C4F304E9C}
 	EndGlobalSection
 EndGlobal
