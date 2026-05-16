@@ -9,6 +9,10 @@
 [node name="Game" type="Node" unique_id=692662400]
 script = ExtResource("1_sb48q")
 
+[node name="Camera" type="Camera2D" parent="." unique_id=332791322]
+position_smoothing_enabled = true
+script = ExtResource("5_t88pq")
+
 [node name="HexTileMap" type="Node2D" parent="." unique_id=1144206204]
 script = ExtResource("2_t88pq")
 
@@ -20,7 +24,3 @@ tile_set = ExtResource("3_lqjwq")
 
 [node name="OverlayLayer" type="TileMapLayer" parent="HexTileMap" unique_id=1488547915]
 tile_set = ExtResource("1_2c5w0")
-
-[node name="Camera" type="Camera2D" parent="." unique_id=332791322]
-position_smoothing_enabled = true
-script = ExtResource("5_t88pq")

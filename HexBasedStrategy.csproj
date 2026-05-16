@@ -4,6 +4,10 @@
     <EnableDynamicLoading>true</EnableDynamicLoading>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Remove="src\**" />
+    <EmbeddedResource Remove="src\**" />
+  </ItemGroup>
+  <ItemGroup>
     <Content Include="Properties\launchSettings.json" />
   </ItemGroup>
   <ItemGroup>
