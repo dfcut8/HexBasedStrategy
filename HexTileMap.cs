@@ -22,6 +22,7 @@ public partial class HexTileMap : Node2D
         OverlayLayer = GetNode<TileMapLayer>("OverlayLayer");
 
         GenerateTerrain();
+        GD.Print("HexMap Ready!");
     }
 
     public override void _Process(double delta) { }
@@ -36,6 +37,11 @@ public partial class HexTileMap : Node2D
                 BorderLayer.SetCell(new Vector2I(x, y), 0, new Vector2I(0, 0));
             }
         }
-        GlobalEvents.MapGenerationCompleted?.Invoke();
+        Callable
+            .From(() =>
+            {
+                GlobalEvents.MapGenerationCompleted?.Invoke();
+            })
+            .CallDeferred();
     }
 }
