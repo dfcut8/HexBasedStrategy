@@ -1,4 +1,3 @@
-using System;
 using Godot;
 using HexBasedStrategy.Core;
 
@@ -29,6 +28,7 @@ public partial class Camera : Camera2D
     public override void _Ready()
     {
         GlobalEvents.MapGenerationCompleted += OnMapGenerationCompleted;
+        GD.Print("Camera Ready!");
     }
 
     public override void _ExitTree()
@@ -38,7 +38,7 @@ public partial class Camera : Camera2D
 
     private void OnMapGenerationCompleted()
     {
-        throw new NotImplementedException();
+        GD.Print("OnMapGenerationCompleted called from Camera.");
     }
 
     public override void _PhysicsProcess(double delta)
