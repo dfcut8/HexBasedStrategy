@@ -1,4 +1,6 @@
+using System;
 using System.Collections.Generic;
+using System.Linq;
 using Godot;
 using HexBasedStrategy.Core;
 
@@ -17,7 +19,7 @@ public partial class HexTileMap : Node2D
     private TileMapLayer OverlayLayer;
 
     private Dictionary<Vector2I, Hex> mapData = [];
-    private Dictionary<TerrainType, Vector2I> terrainToTextureCoords = new()
+    private readonly Dictionary<TerrainType, Vector2I> terrainToTextureCoords = new()
     {
         [TerrainType.Plains] = new Vector2I(0, 0),
         [TerrainType.Desert] = new Vector2I(0, 1),
@@ -48,11 +50,66 @@ public partial class HexTileMap : Node2D
 
     private void GenerateTerrain()
     {
+        float[,] noiseMap = new float[Width, Height];
+        float[,] forestMap = new float[Width, Height];
+        float[,] desertMap = new float[Width, Height];
+        float[,] mountainMap = new float[Width, Height];
+
+        var r = new Random();
+        int seed = r.Next(100_000);
+
+        // Base terrain (water, Beach, Plains)
+        var noise = new FastNoiseLite
+        {
+            Seed = seed,
+            Frequency = 0.008f,
+            FractalType = FastNoiseLite.FractalTypeEnum.Fbm,
+            FractalOctaves = 4,
+            FractalLacunarity = 2.25f,
+        };
+
+        var noiseMax = 0f;
+
+        // Generator
         for (int x = 0; x < Width; x++)
         {
             for (int y = 0; y < Height; y++)
             {
-                BaseLayer.SetCell(new Vector2I(x, y), 0, new Vector2I(0, 0));
+                noiseMap[x, y] = Math.Abs(noise.GetNoise2D(x, y));
+                if (noiseMap[x, y] > noiseMax)
+                {
+                    noiseMax = noiseMap[x, y];
+                }
+            }
+        }
+
+        List<(float Min, float Max, TerrainType Type)> terrainGeneratedValues =
+        [
+            (0, noiseMax / 10 * 2.5f, TerrainType.Water),
+            (noiseMax / 10 * 2.5f, noiseMax / 10 * 4f, TerrainType.Shallows),
+            (noiseMax / 10 * 4f, noiseMax / 10 * 4.5f, TerrainType.Beach),
+            (noiseMax / 10 * 4.5f, noiseMax + 0.05f, TerrainType.Plains),
+        ];
+
+        for (int x = 0; x < Width; x++)
+        {
+            for (int y = 0; y < Height; y++)
+            {
+                Hex h = new(new Vector2I(x, y));
+                float noiseValue = noiseMap[x, y];
+                try
+                {
+                    h.TerrainType = terrainGeneratedValues
+                        .First(range => noiseValue >= range.Min && noiseValue < range.Max)
+                        .Type;
+                    mapData[new Vector2I(x, y)] = h;
+                }
+                catch (Exception e)
+                {
+                    GD.Print(e);
+                }
+                BaseLayer.SetCell(new Vector2I(x, y), 0, terrainToTextureCoords[h.TerrainType]);
+                //BaseLayer.SetCell(new Vector2I(x, y), 0, new Vector2I(0, 0));
                 BorderLayer.SetCell(new Vector2I(x, y), 0, new Vector2I(0, 0));
             }
         }
