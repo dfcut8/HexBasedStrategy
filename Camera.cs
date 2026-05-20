@@ -17,6 +17,9 @@ public partial class Camera : Camera2D
     [Export]
     public float ZoomInMax = 2.0f;
 
+    [Export]
+    public int Padding = 100;
+
     private bool mouseWheelscrollingUp = false;
     private bool mouseWheelscrollingDown = false;
 
@@ -36,29 +39,33 @@ public partial class Camera : Camera2D
         GlobalEvents.MapGenerationCompleted -= OnMapGenerationCompleted;
     }
 
-    private void OnMapGenerationCompleted()
-    {
-        GD.Print("OnMapGenerationCompleted called from Camera.");
-    }
-
     public override void _PhysicsProcess(double delta)
     {
-        if (Input.IsActionPressed("map_move_right"))
+        var currentPosition = GetScreenCenterPosition();
+        //GD.Print(
+        //    $"limitRight={LimitRight}, limitLeft={LimitLeft}, limitTop={LimitTop}, limitBottom={LimitBottom}, lastPosition={lastPosition}, currentPosition={currentPosition}, globalPosition={GlobalPosition}, IsCameraLimitHit={IsCameraLimitHit(currentPosition)}"
+        //);
+
+        GD.Print(
+            $"leftBound={leftBound}, rightBound={rightBound}, topBound={topBound}, bottomBound={bottomBound}, currentPosition={currentPosition}, globalPosition={GlobalPosition}, padding={Padding}"
+        );
+
+        if (Input.IsActionPressed("map_move_right") && GlobalPosition.X < rightBound)
         {
             Position += new Vector2(Velocity, 0);
         }
 
-        if (Input.IsActionPressed("map_move_left"))
+        if (Input.IsActionPressed("map_move_left") && GlobalPosition.X > leftBound)
         {
             Position += new Vector2(-Velocity, 0);
         }
 
-        if (Input.IsActionPressed("map_move_up"))
+        if (Input.IsActionPressed("map_move_up") && currentPosition.Y > topBound)
         {
             Position += new Vector2(0, -Velocity);
         }
 
-        if (Input.IsActionPressed("map_move_down"))
+        if (Input.IsActionPressed("map_move_down") && currentPosition.Y < bottomBound)
         {
             Position += new Vector2(0, Velocity);
         }
@@ -98,5 +105,24 @@ public partial class Camera : Camera2D
         {
             mouseWheelscrollingDown = false;
         }
+    }
+
+    private void OnMapGenerationCompleted(HexTileMap map)
+    {
+        GD.Print("OnMapGenerationCompleted called from Camera.");
+        //leftBound = ToGlobal(map.MapToLocal(new Vector2I(0, 0))).X - Padding;
+        //rightBound = ToGlobal(map.MapToLocal(new Vector2I(map.Width, 0))).X - Padding;
+        //topBound = ToGlobal(map.MapToLocal(new Vector2I(0, 0))).Y - Padding;
+        //bottomBound = ToGlobal(map.MapToLocal(new Vector2I(0, map.Height))).Y + Padding;
+
+        leftBound = map.MapToLocal(new Vector2I(0, 0)).X + Padding;
+        rightBound = map.MapToLocal(new Vector2I(map.Width, 0)).X - Padding;
+        topBound = map.MapToLocal(new Vector2I(0, 0)).Y + Padding;
+        bottomBound = map.MapToLocal(new Vector2I(0, map.Height)).Y - Padding;
+
+        //LimitLeft = (int)map.MapToLocal(new Vector2I(0, 0)).X - Padding;
+        //LimitRight = (int)map.MapToLocal(new Vector2I(map.Width, 0)).X + Padding;
+        //LimitTop = (int)map.MapToLocal(new Vector2I(0, 0)).Y - Padding;
+        //LimitBottom = (int)map.MapToLocal(new Vector2I(0, map.Height)).Y + Padding;
     }
 }

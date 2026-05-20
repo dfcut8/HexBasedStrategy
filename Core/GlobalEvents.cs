@@ -4,5 +4,5 @@ namespace HexBasedStrategy.Core;
 
 internal static class GlobalEvents
 {
-    public static Action MapGenerationCompleted;
+    public static Action<HexTileMap> MapGenerationCompleted;
 }

@@ -6,14 +6,14 @@ namespace HexBasedStrategy;
 public partial class HexTileMap : Node2D
 {
     [Export]
-    public int Width = 100;
+    public int Width = 20;
 
     [Export]
-    public int Height = 60;
+    public int Height = 20;
 
-    public TileMapLayer BaseLayer;
-    public TileMapLayer BorderLayer;
-    public TileMapLayer OverlayLayer;
+    private TileMapLayer BaseLayer;
+    private TileMapLayer BorderLayer;
+    private TileMapLayer OverlayLayer;
 
     public override void _Ready()
     {
@@ -27,7 +27,7 @@ public partial class HexTileMap : Node2D
 
     public override void _Process(double delta) { }
 
-    public void GenerateTerrain()
+    private void GenerateTerrain()
     {
         for (int x = 0; x < Width; x++)
         {
@@ -40,8 +40,13 @@ public partial class HexTileMap : Node2D
         Callable
             .From(() =>
             {
-                GlobalEvents.MapGenerationCompleted?.Invoke();
+                GlobalEvents.MapGenerationCompleted?.Invoke(this);
             })
             .CallDeferred();
+    }
+
+    public Vector2 MapToLocal(Vector2I coords)
+    {
+        return BaseLayer.MapToLocal(coords);
     }
 }
