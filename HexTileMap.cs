@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using Godot;
 using HexBasedStrategy.Core;
 
@@ -15,6 +16,19 @@ public partial class HexTileMap : Node2D
     private TileMapLayer BorderLayer;
     private TileMapLayer OverlayLayer;
 
+    private Dictionary<Vector2I, Hex> mapData = [];
+    private Dictionary<TerrainType, Vector2I> terrainToTextureCoords = new()
+    {
+        [TerrainType.Plains] = new Vector2I(0, 0),
+        [TerrainType.Desert] = new Vector2I(0, 1),
+        [TerrainType.Beach] = new Vector2I(0, 2),
+        [TerrainType.Ice] = new Vector2I(0, 3),
+        [TerrainType.Water] = new Vector2I(1, 0),
+        [TerrainType.Mountain] = new Vector2I(1, 1),
+        [TerrainType.Shallows] = new Vector2I(1, 2),
+        [TerrainType.Forest] = new Vector2I(1, 3),
+    };
+
     public override void _Ready()
     {
         BaseLayer = GetNode<TileMapLayer>("BaseLayer");
@@ -26,6 +40,11 @@ public partial class HexTileMap : Node2D
     }
 
     public override void _Process(double delta) { }
+
+    public Vector2 MapToLocal(Vector2I coords)
+    {
+        return BaseLayer.MapToLocal(coords);
+    }
 
     private void GenerateTerrain()
     {
@@ -43,10 +62,5 @@ public partial class HexTileMap : Node2D
                 GlobalEvents.MapGenerationCompleted?.Invoke(this);
             })
             .CallDeferred();
-    }
-
-    public Vector2 MapToLocal(Vector2I coords)
-    {
-        return BaseLayer.MapToLocal(coords);
     }
 }
