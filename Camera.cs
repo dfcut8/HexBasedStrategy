@@ -46,9 +46,9 @@ public partial class Camera : Camera2D
         //    $"limitRight={LimitRight}, limitLeft={LimitLeft}, limitTop={LimitTop}, limitBottom={LimitBottom}, lastPosition={lastPosition}, currentPosition={currentPosition}, globalPosition={GlobalPosition}, IsCameraLimitHit={IsCameraLimitHit(currentPosition)}"
         //);
 
-        GD.Print(
-            $"leftBound={leftBound}, rightBound={rightBound}, topBound={topBound}, bottomBound={bottomBound}, currentPosition={currentPosition}, globalPosition={GlobalPosition}, padding={Padding}"
-        );
+        //GD.Print(
+        //    $"leftBound={leftBound}, rightBound={rightBound}, topBound={topBound}, bottomBound={bottomBound}, currentPosition={currentPosition}, globalPosition={GlobalPosition}, padding={Padding}"
+        //);
 
         if (Input.IsActionPressed("map_move_right") && GlobalPosition.X < rightBound)
         {
