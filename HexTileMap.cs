@@ -49,10 +49,6 @@ public partial class HexTileMap : Node2D
         return BaseLayer.MapToLocal(coords);
     }
 
-    private record MapGenerationResult(float Max, float[,] GeneratedData);
-
-    private MapGenerationResult GenerateMapData();
-
     private void GenerateTerrain()
     {
         var r = new Random();
