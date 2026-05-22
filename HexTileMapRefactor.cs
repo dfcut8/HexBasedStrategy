@@ -5,7 +5,7 @@ using HexBasedStrategy.Core;
 
 namespace HexBasedStrategy;
 
-public partial class HexTileMap : Node2D, IHexTileMap
+public partial class HexTileMapRefactor : Node2D, IHexTileMap
 {
     [Export]
     public int Width { get; set; } = 20;
@@ -49,7 +49,7 @@ public partial class HexTileMap : Node2D, IHexTileMap
 
             GenerateTerrain();
 
-            GD.Print("HexMap Ready!");
+            GD.Print("HexMapRefactor Ready!");
         }
     }
 
