@@ -78,39 +78,24 @@ public partial class HexTileMapRefactor : Node2D, IHexTileMap
         var mapForestValues = new float[Width, Height];
         var mapDesertValues = new float[Width, Height];
 
-        float max = 0f;
-        float maxForest = 0f;
-        float maxDesert = 0f;
-
         for (int x = 0; x < Width; x++)
         {
             for (int y = 0; y < Height; y++)
             {
                 float value = Math.Abs(noise.GetNoise2D(x, y));
                 mapValues[x, y] = value;
-                max = Math.Max(max, value);
-
                 float valueForest = Math.Abs(noiseForest.GetNoise2D(x, y));
                 mapForestValues[x, y] = valueForest;
-                maxForest = Math.Max(maxForest, valueForest);
-
                 float valueDesert = Math.Abs(noiseDesert.GetNoise2D(x, y));
                 mapDesertValues[x, y] = valueDesert;
-                maxDesert = Math.Max(maxDesert, valueDesert);
-            }
-        }
 
-        for (int x = 0; x < Width; x++)
-        {
-            for (int y = 0; y < Height; y++)
-            {
                 var coords = new Vector2I(x, y);
-                var terrain = GetBaseTerrain(mapValues[x, y], max);
+                var terrain = GetBaseTerrain(mapValues[x, y]);
 
                 mapData[coords] = new Hex(coords) { TerrainType = terrain };
                 if (
                     mapData[coords].TerrainType is TerrainType.Plains
-                    && IsDesert(mapDesertValues[x, y], maxDesert)
+                    && IsDesert(mapDesertValues[x, y])
                 )
                 {
                     mapData[coords].TerrainType = TerrainType.Desert;
@@ -118,7 +103,7 @@ public partial class HexTileMapRefactor : Node2D, IHexTileMap
 
                 if (
                     mapData[coords].TerrainType is TerrainType.Plains
-                    && IsForest(mapForestValues[x, y], maxForest)
+                    && IsForest(mapForestValues[x, y])
                 )
                 {
                     mapData[coords].TerrainType = TerrainType.Forest;
@@ -168,11 +153,9 @@ public partial class HexTileMapRefactor : Node2D, IHexTileMap
         };
     }
 
-    private static TerrainType GetBaseTerrain(float value, float max)
+    private static TerrainType GetBaseTerrain(float value)
     {
-        float normalized = value / max;
-
-        return normalized switch
+        return value switch
         {
             < 0.25f => TerrainType.Water,
             < 0.40f => TerrainType.Shallows,
@@ -181,22 +164,18 @@ public partial class HexTileMapRefactor : Node2D, IHexTileMap
         };
     }
 
-    private static bool IsDesert(float value, float max)
+    private static bool IsDesert(float value)
     {
-        float normalized = value / max;
-
-        return normalized switch
+        return value switch
         {
             > 0.70f => true,
             _ => false,
         };
     }
 
-    private static bool IsForest(float value, float max)
+    private static bool IsForest(float value)
     {
-        float normalized = value / max;
-
-        return normalized switch
+        return value switch
         {
             > 0.75f => true,
             _ => false,
