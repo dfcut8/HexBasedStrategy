@@ -9,6 +9,7 @@ script = ExtResource("1_qjxga")
 
 [node name="BaseLayer" type="TileMapLayer" parent="." unique_id=1426105779]
 tile_set = ExtResource("2_g3gas")
+collision_enabled = false
 
 [node name="BorderLayer" type="TileMapLayer" parent="." unique_id=973000473]
 tile_set = ExtResource("3_olwfd")
