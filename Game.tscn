@@ -6,7 +6,7 @@
 
 [node name="Game" type="Node" unique_id=692662400 node_paths=PackedStringArray("ActiveTileMap")]
 script = ExtResource("1_sb48q")
-ActiveTileMap = NodePath("")
+ActiveTileMap = NodePath("HexTileMapRefactor")
 
 [node name="Camera" type="Camera2D" parent="." unique_id=332791322]
 position = Vector2(1500, 1500)
@@ -17,3 +17,8 @@ Velocity = 155
 Padding = 400
 
 [node name="HexTileMapRefactor" parent="." unique_id=2113940094 instance=ExtResource("3_u44n3")]
+Width = 80
+Height = 80
+SeedLand = 10000
+SeedForest = 10000
+SeedDesert = 10000
