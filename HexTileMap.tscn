@@ -11,6 +11,7 @@ Height = 200
 
 [node name="BaseLayer" type="TileMapLayer" parent="." unique_id=1801497008]
 tile_set = ExtResource("2_u7pue")
+rendering_quadrant_size = 32
 collision_enabled = false
 
 [node name="BorderLayer" type="TileMapLayer" parent="." unique_id=1687429950]
