@@ -13,6 +13,16 @@ public partial class HexTileMapRefactor : Node2D, IHexTileMap
     [Export]
     public int Height { get; set; } = 20;
 
+    [Export]
+    public int SeedLand { get; set; } = 0;
+
+    [Export]
+    public int SeedForest { get; set; } = 0;
+
+    [Export]
+    public int SeedDesert { get; set; } = 0;
+
+    [Export]
     public bool Enabled { get; set; } = true;
 
     private TileMapLayer BaseLayer = null!;
@@ -61,9 +71,9 @@ public partial class HexTileMapRefactor : Node2D, IHexTileMap
     private void GenerateTerrain()
     {
         var r = new Random();
-        var noise = CreateNoise(r.Next(maxSeed));
-        var noiseForest = CreateNoiseForest(r.Next(maxSeed));
-        var noiseDesert = CreateNoiseDesert(r.Next(maxSeed));
+        var noise = CreateNoise(SeedLand == 0 ? r.Next(maxSeed) : SeedLand);
+        var noiseForest = CreateNoiseForest(SeedForest == 0 ? r.Next(maxSeed) : SeedForest);
+        var noiseDesert = CreateNoiseDesert(SeedDesert == 0 ? r.Next(maxSeed) : SeedDesert);
         var mapValues = new float[Width, Height];
         var mapForestValues = new float[Width, Height];
         var mapDesertValues = new float[Width, Height];
