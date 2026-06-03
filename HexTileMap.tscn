@@ -11,9 +11,12 @@ Height = 200
 
 [node name="BaseLayer" type="TileMapLayer" parent="." unique_id=1801497008]
 tile_set = ExtResource("2_u7pue")
+collision_enabled = false
 
 [node name="BorderLayer" type="TileMapLayer" parent="." unique_id=1687429950]
 tile_set = ExtResource("3_j1kq6")
+collision_enabled = false
 
 [node name="OverlayLayer" type="TileMapLayer" parent="." unique_id=344069573]
 tile_set = ExtResource("2_u7pue")
+collision_enabled = false

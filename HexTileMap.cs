@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using Godot;
 using HexBasedStrategy.Core;
 
@@ -12,6 +13,15 @@ public partial class HexTileMap : Node2D, IHexTileMap
 
     [Export]
     public int Height { get; set; } = 20;
+
+    [Export]
+    public int SeedLand { get; set; } = 0;
+
+    [Export]
+    public int SeedForest { get; set; } = 0;
+
+    [Export]
+    public int SeedDesert { get; set; } = 0;
 
     public bool Enabled { get; set; } = true;
 
@@ -60,10 +70,12 @@ public partial class HexTileMap : Node2D, IHexTileMap
 
     private void GenerateTerrain()
     {
+        var stopwatch = new Stopwatch();
+        stopwatch.Start();
         var r = new Random();
-        var noise = CreateNoise(r.Next(maxSeed));
-        var noiseForest = CreateNoiseForest(r.Next(maxSeed));
-        var noiseDesert = CreateNoiseDesert(r.Next(maxSeed));
+        var noise = CreateNoise(SeedLand == 0 ? r.Next(maxSeed) : SeedLand);
+        var noiseForest = CreateNoiseForest(SeedForest == 0 ? r.Next(maxSeed) : SeedForest);
+        var noiseDesert = CreateNoiseDesert(SeedDesert == 0 ? r.Next(maxSeed) : SeedDesert);
         var mapValues = new float[Width, Height];
         var mapForestValues = new float[Width, Height];
         var mapDesertValues = new float[Width, Height];
@@ -89,6 +101,13 @@ public partial class HexTileMap : Node2D, IHexTileMap
                 maxDesert = Math.Max(maxDesert, valueDesert);
             }
         }
+        stopwatch.Stop();
+
+        GD.Print($"Terrain data generation took: {stopwatch.ElapsedMilliseconds} ms.");
+
+        GD.Print($"max={max}, maxForest={maxForest}, maxDesert={maxDesert}");
+
+        stopwatch.Restart();
 
         for (int x = 0; x < Width; x++)
         {
@@ -120,6 +139,8 @@ public partial class HexTileMap : Node2D, IHexTileMap
         }
 
         Callable.From(() => GlobalEvents.MapGenerationCompleted?.Invoke(this)).CallDeferred();
+        stopwatch.Stop();
+        GD.Print($"Terrain cells generation took: {stopwatch.ElapsedMilliseconds} ms.");
     }
 
     private static FastNoiseLite CreateNoise(int seed)
