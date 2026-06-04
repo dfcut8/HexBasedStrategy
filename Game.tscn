@@ -17,8 +17,5 @@ Velocity = 155
 Padding = 400
 
 [node name="HexTileMapRefactor" parent="." unique_id=2113940094 instance=ExtResource("3_u44n3")]
-Width = 8
-Height = 8
-SeedLand = 20000
-SeedForest = 20000
-SeedDesert = 20000
+Width = 200
+Height = 200
