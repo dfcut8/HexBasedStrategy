@@ -22,6 +22,9 @@ public partial class HexTileMap : Node2D
     [Export]
     public int SeedDesert { get; set; } = 0;
 
+    [Export]
+    public int SeedMountain { get; set; } = 0;
+
     private TileMapLayer BaseLayer = null!;
     private TileMapLayer BorderLayer = null!;
     private TileMapLayer OverlayLayer = null!;
@@ -66,13 +69,16 @@ public partial class HexTileMap : Node2D
         var noise = CreateNoise(SeedLand == 0 ? r.Next(maxSeed) : SeedLand);
         var noiseForest = CreateNoiseForest(SeedForest == 0 ? r.Next(maxSeed) : SeedForest);
         var noiseDesert = CreateNoiseDesert(SeedDesert == 0 ? r.Next(maxSeed) : SeedDesert);
+        var noiseMountain = CreateNoiseMountain(SeedMountain == 0 ? r.Next(maxSeed) : SeedMountain);
         var mapValues = new float[Width, Height];
-        var mapForestValues = new float[Width, Height];
-        var mapDesertValues = new float[Width, Height];
+        var mapValuesForest = new float[Width, Height];
+        var mapValuesDesert = new float[Width, Height];
+        var mapValuesMountain = new float[Width, Height];
 
         float max = 0f;
         float maxForest = 0f;
         float maxDesert = 0f;
+        float maxMountain = 0f;
 
         for (int x = 0; x < Width; x++)
         {
@@ -83,19 +89,25 @@ public partial class HexTileMap : Node2D
                 max = Math.Max(max, value);
 
                 float valueForest = Math.Abs(noiseForest.GetNoise2D(x, y));
-                mapForestValues[x, y] = valueForest;
+                mapValuesForest[x, y] = valueForest;
                 maxForest = Math.Max(maxForest, valueForest);
 
                 float valueDesert = Math.Abs(noiseDesert.GetNoise2D(x, y));
-                mapDesertValues[x, y] = valueDesert;
+                mapValuesDesert[x, y] = valueDesert;
                 maxDesert = Math.Max(maxDesert, valueDesert);
+
+                float valueMountain = Math.Abs(noiseMountain.GetNoise2D(x, y));
+                mapValuesMountain[x, y] = valueDesert;
+                maxMountain = Math.Max(maxMountain, valueMountain);
             }
         }
         stopwatch.Stop();
 
         GD.Print($"Terrain data generation took: {stopwatch.ElapsedMilliseconds} ms.");
 
-        GD.Print($"max={max}, maxForest={maxForest}, maxDesert={maxDesert}");
+        GD.Print(
+            $"max={max}, maxForest={maxForest}, maxDesert={maxDesert}, maxMountain={maxMountain}"
+        );
 
         stopwatch.Restart();
 
@@ -109,7 +121,7 @@ public partial class HexTileMap : Node2D
                 mapData[coords] = new Hex(coords) { TerrainType = terrain };
                 if (
                     mapData[coords].TerrainType is TerrainType.Plains
-                    && IsDesert(mapDesertValues[x, y], maxDesert)
+                    && IsDesert(mapValuesDesert[x, y], maxDesert)
                 )
                 {
                     mapData[coords].TerrainType = TerrainType.Desert;
@@ -117,10 +129,18 @@ public partial class HexTileMap : Node2D
 
                 if (
                     mapData[coords].TerrainType is TerrainType.Plains
-                    && IsForest(mapForestValues[x, y], maxForest)
+                    && IsForest(mapValuesForest[x, y], maxForest)
                 )
                 {
                     mapData[coords].TerrainType = TerrainType.Forest;
+                }
+
+                if (
+                    mapData[coords].TerrainType is TerrainType.Plains
+                    && IsMountain(mapValuesMountain[x, y], maxMountain)
+                )
+                {
+                    mapData[coords].TerrainType = TerrainType.Mountain;
                 }
 
                 BaseLayer.SetCell(coords, 0, terrainToTextureCoords[mapData[coords].TerrainType]);
@@ -169,6 +189,17 @@ public partial class HexTileMap : Node2D
         };
     }
 
+    private static FastNoiseLite CreateNoiseMountain(int seed)
+    {
+        return new FastNoiseLite
+        {
+            Seed = seed,
+            NoiseType = FastNoiseLite.NoiseTypeEnum.Simplex,
+            Frequency = 0.05f,
+            FractalType = FastNoiseLite.FractalTypeEnum.Ridged,
+        };
+    }
+
     private static TerrainType GetBaseTerrain(float value, float max)
     {
         float normalized = value / max;
@@ -200,6 +231,17 @@ public partial class HexTileMap : Node2D
         return normalized switch
         {
             > 0.75f => true,
+            _ => false,
+        };
+    }
+
+    private static bool IsMountain(float value, float max)
+    {
+        float normalized = value / max;
+
+        return normalized switch
+        {
+            > 0.45f => true,
             _ => false,
         };
     }
