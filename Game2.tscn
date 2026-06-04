@@ -18,8 +18,3 @@ Padding = 400
 
 [node name="HexTileMap" parent="." unique_id=393018333 instance=ExtResource("3_2kb65")]
 position = Vector2(2016.2856, 2296.0002)
-Width = 100
-Height = 100
-SeedLand = 20000
-SeedForest = 20000
-SeedDesert = 20000

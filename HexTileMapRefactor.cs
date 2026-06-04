@@ -157,9 +157,13 @@ public partial class HexTileMapRefactor : Node2D, IHexTileMap
     {
         return value switch
         {
-            < 0.25f => TerrainType.Water,
-            < 0.40f => TerrainType.Shallows,
-            < 0.45f => TerrainType.Beach,
+            //< 0.25f => TerrainType.Water,
+            //< 0.40f => TerrainType.Shallows,
+            //< 0.45f => TerrainType.Beach,
+            //_ => TerrainType.Plains,
+            < 0.20f => TerrainType.Water,
+            < 0.22f => TerrainType.Shallows,
+            < 0.25f => TerrainType.Beach,
             _ => TerrainType.Plains,
         };
     }
@@ -168,7 +172,7 @@ public partial class HexTileMapRefactor : Node2D, IHexTileMap
     {
         return value switch
         {
-            > 0.70f => true,
+            > 0.60f => true,
             _ => false,
         };
     }
@@ -177,7 +181,7 @@ public partial class HexTileMapRefactor : Node2D, IHexTileMap
     {
         return value switch
         {
-            > 0.75f => true,
+            > 0.65f => true,
             _ => false,
         };
     }
