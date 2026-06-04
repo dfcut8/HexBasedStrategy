@@ -1,4 +1,4 @@
-namespace HexBasedStrategy;
+namespace HexBasedStrategy.Core;
 
 public enum TerrainType
 {
