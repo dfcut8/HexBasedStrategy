@@ -1,7 +1,6 @@
 using Godot;
-using HexBasedStrategy.Core;
 
-namespace HexBasedStrategy;
+namespace HexBasedStrategy.Core;
 
 public partial class Camera : Camera2D
 {
@@ -107,7 +106,7 @@ public partial class Camera : Camera2D
         }
     }
 
-    private void OnMapGenerationCompleted(IHexTileMap map)
+    private void OnMapGenerationCompleted(HexTileMap map)
     {
         GD.Print("OnMapGenerationCompleted called from Camera.");
         //leftBound = ToGlobal(map.MapToLocal(new Vector2I(0, 0))).X - Padding;

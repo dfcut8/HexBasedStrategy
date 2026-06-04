@@ -1,11 +1,11 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using Godot;
-using HexBasedStrategy.Core;
 
-namespace HexBasedStrategy;
+namespace HexBasedStrategy.Core;
 
-public partial class HexTileMapRefactor : Node2D, IHexTileMap
+public partial class HexTileMap : Node2D
 {
     [Export]
     public int Width { get; set; } = 20;
@@ -21,9 +21,6 @@ public partial class HexTileMapRefactor : Node2D, IHexTileMap
 
     [Export]
     public int SeedDesert { get; set; } = 0;
-
-    [Export]
-    public bool Enabled { get; set; } = true;
 
     private TileMapLayer BaseLayer = null!;
     private TileMapLayer BorderLayer = null!;
@@ -47,20 +44,13 @@ public partial class HexTileMapRefactor : Node2D, IHexTileMap
 
     public override void _Ready()
     {
-        if (!Enabled)
-        {
-            ProcessMode = ProcessModeEnum.Disabled;
-        }
-        else
-        {
-            BaseLayer = GetNode<TileMapLayer>("BaseLayer");
-            BorderLayer = GetNode<TileMapLayer>("BorderLayer");
-            OverlayLayer = GetNode<TileMapLayer>("OverlayLayer");
+        BaseLayer = GetNode<TileMapLayer>("BaseLayer");
+        BorderLayer = GetNode<TileMapLayer>("BorderLayer");
+        OverlayLayer = GetNode<TileMapLayer>("OverlayLayer");
 
-            GenerateTerrain();
+        GenerateTerrain();
 
-            GD.Print("HexMapRefactor Ready!");
-        }
+        GD.Print("HexMap Ready!");
     }
 
     public Vector2 MapToLocal(Vector2I coords)
@@ -70,6 +60,8 @@ public partial class HexTileMapRefactor : Node2D, IHexTileMap
 
     private void GenerateTerrain()
     {
+        var stopwatch = new Stopwatch();
+        stopwatch.Start();
         var r = new Random();
         var noise = CreateNoise(SeedLand == 0 ? r.Next(maxSeed) : SeedLand);
         var noiseForest = CreateNoiseForest(SeedForest == 0 ? r.Next(maxSeed) : SeedForest);
@@ -78,24 +70,46 @@ public partial class HexTileMapRefactor : Node2D, IHexTileMap
         var mapForestValues = new float[Width, Height];
         var mapDesertValues = new float[Width, Height];
 
+        float max = 0f;
+        float maxForest = 0f;
+        float maxDesert = 0f;
+
         for (int x = 0; x < Width; x++)
         {
             for (int y = 0; y < Height; y++)
             {
                 float value = Math.Abs(noise.GetNoise2D(x, y));
                 mapValues[x, y] = value;
+                max = Math.Max(max, value);
+
                 float valueForest = Math.Abs(noiseForest.GetNoise2D(x, y));
                 mapForestValues[x, y] = valueForest;
+                maxForest = Math.Max(maxForest, valueForest);
+
                 float valueDesert = Math.Abs(noiseDesert.GetNoise2D(x, y));
                 mapDesertValues[x, y] = valueDesert;
+                maxDesert = Math.Max(maxDesert, valueDesert);
+            }
+        }
+        stopwatch.Stop();
 
+        GD.Print($"Terrain data generation took: {stopwatch.ElapsedMilliseconds} ms.");
+
+        GD.Print($"max={max}, maxForest={maxForest}, maxDesert={maxDesert}");
+
+        stopwatch.Restart();
+
+        for (int x = 0; x < Width; x++)
+        {
+            for (int y = 0; y < Height; y++)
+            {
                 var coords = new Vector2I(x, y);
-                var terrain = GetBaseTerrain(mapValues[x, y]);
+                var terrain = GetBaseTerrain(mapValues[x, y], max);
 
                 mapData[coords] = new Hex(coords) { TerrainType = terrain };
                 if (
                     mapData[coords].TerrainType is TerrainType.Plains
-                    && IsDesert(mapDesertValues[x, y])
+                    && IsDesert(mapDesertValues[x, y], maxDesert)
                 )
                 {
                     mapData[coords].TerrainType = TerrainType.Desert;
@@ -103,7 +117,7 @@ public partial class HexTileMapRefactor : Node2D, IHexTileMap
 
                 if (
                     mapData[coords].TerrainType is TerrainType.Plains
-                    && IsForest(mapForestValues[x, y])
+                    && IsForest(mapForestValues[x, y], maxForest)
                 )
                 {
                     mapData[coords].TerrainType = TerrainType.Forest;
@@ -115,6 +129,8 @@ public partial class HexTileMapRefactor : Node2D, IHexTileMap
         }
 
         Callable.From(() => GlobalEvents.MapGenerationCompleted?.Invoke(this)).CallDeferred();
+        stopwatch.Stop();
+        GD.Print($"Terrain cells generation took: {stopwatch.ElapsedMilliseconds} ms.");
     }
 
     private static FastNoiseLite CreateNoise(int seed)
@@ -153,35 +169,37 @@ public partial class HexTileMapRefactor : Node2D, IHexTileMap
         };
     }
 
-    private static TerrainType GetBaseTerrain(float value)
+    private static TerrainType GetBaseTerrain(float value, float max)
     {
-        return value switch
+        float normalized = value / max;
+
+        return normalized switch
         {
-            //< 0.25f => TerrainType.Water,
-            //< 0.40f => TerrainType.Shallows,
-            //< 0.45f => TerrainType.Beach,
-            //_ => TerrainType.Plains,
-            < 0.20f => TerrainType.Water,
-            < 0.22f => TerrainType.Shallows,
-            < 0.25f => TerrainType.Beach,
+            < 0.25f => TerrainType.Water,
+            < 0.40f => TerrainType.Shallows,
+            < 0.45f => TerrainType.Beach,
             _ => TerrainType.Plains,
         };
     }
 
-    private static bool IsDesert(float value)
+    private static bool IsDesert(float value, float max)
     {
-        return value switch
+        float normalized = value / max;
+
+        return normalized switch
         {
-            > 0.60f => true,
+            > 0.70f => true,
             _ => false,
         };
     }
 
-    private static bool IsForest(float value)
+    private static bool IsForest(float value, float max)
     {
-        return value switch
+        float normalized = value / max;
+
+        return normalized switch
         {
-            > 0.65f => true,
+            > 0.75f => true,
             _ => false,
         };
     }

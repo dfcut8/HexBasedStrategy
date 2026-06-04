@@ -1,6 +1,6 @@
 using Godot;
 
-namespace HexBasedStrategy;
+namespace HexBasedStrategy.Core;
 
 public class Hex(Vector2I coords)
 {

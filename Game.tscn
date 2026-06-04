@@ -1,21 +1,16 @@
-[gd_scene format=3 uid="uid://7co1wn8pl53r"]
+[gd_scene format=3 uid="uid://bxfxitnfjsg0i"]
 
-[ext_resource type="Script" uid="uid://khodnvqp6bdo" path="res://Game.cs" id="1_sb48q"]
-[ext_resource type="PackedScene" uid="uid://c7wbufrraicyu" path="res://HexTileMapRefactor.tscn" id="3_u44n3"]
-[ext_resource type="Script" uid="uid://cvu4q2tke4llv" path="res://Camera.cs" id="5_t88pq"]
+[ext_resource type="Script" uid="uid://cvu4q2tke4llv" path="res://Core/Camera/Camera.cs" id="1_wbfu4"]
+[ext_resource type="PackedScene" uid="uid://d3l6yl3afn0aj" path="res://Core/HexTileMap/HexTileMap.tscn" id="2_xkndl"]
 
-[node name="Game" type="Node" unique_id=692662400 node_paths=PackedStringArray("ActiveTileMap")]
-script = ExtResource("1_sb48q")
-ActiveTileMap = NodePath("HexTileMapRefactor")
+[node name="Game" type="Node" unique_id=692662400]
 
 [node name="Camera" type="Camera2D" parent="." unique_id=332791322]
 position = Vector2(1500, 1500)
 zoom = Vector2(0.2, 0.2)
 position_smoothing_enabled = true
-script = ExtResource("5_t88pq")
+script = ExtResource("1_wbfu4")
 Velocity = 155
 Padding = 400
 
-[node name="HexTileMapRefactor" parent="." unique_id=2113940094 instance=ExtResource("3_u44n3")]
-Width = 200
-Height = 200
+[node name="HexTileMap" parent="." unique_id=393018333 instance=ExtResource("2_xkndl")]
