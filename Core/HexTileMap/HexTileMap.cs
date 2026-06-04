@@ -111,6 +111,8 @@ public partial class HexTileMap : Node2D
 
         stopwatch.Restart();
 
+        int iceDepth = 5;
+
         for (int x = 0; x < Width; x++)
         {
             for (int y = 0; y < Height; y++)
@@ -141,6 +143,12 @@ public partial class HexTileMap : Node2D
                 )
                 {
                     mapData[coords].TerrainType = TerrainType.Mountain;
+                }
+
+                // Generate ice on poles
+                if (y < r.Next(iceDepth) + 1 || y > Height - (r.Next(iceDepth) + 1))
+                {
+                    mapData[coords].TerrainType = TerrainType.Ice;
                 }
 
                 BaseLayer.SetCell(coords, 0, terrainToTextureCoords[mapData[coords].TerrainType]);
