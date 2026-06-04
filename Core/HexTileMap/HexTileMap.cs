@@ -97,7 +97,7 @@ public partial class HexTileMap : Node2D
                 maxDesert = Math.Max(maxDesert, valueDesert);
 
                 float valueMountain = Math.Abs(noiseMountain.GetNoise2D(x, y));
-                mapValuesMountain[x, y] = valueDesert;
+                mapValuesMountain[x, y] = valueMountain;
                 maxMountain = Math.Max(maxMountain, valueMountain);
             }
         }
@@ -196,7 +196,8 @@ public partial class HexTileMap : Node2D
             Seed = seed,
             NoiseType = FastNoiseLite.NoiseTypeEnum.Simplex,
             Frequency = 0.05f,
-            FractalType = FastNoiseLite.FractalTypeEnum.Ridged,
+            FractalType = FastNoiseLite.FractalTypeEnum.Fbm,
+            FractalWeightedStrength = 1,
         };
     }
 
@@ -241,7 +242,7 @@ public partial class HexTileMap : Node2D
 
         return normalized switch
         {
-            > 0.45f => true,
+            > 0.50f => true,
             _ => false,
         };
     }
