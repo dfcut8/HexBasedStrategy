@@ -19,5 +19,5 @@ tile_set = ExtResource("3_j1kq6")
 collision_enabled = false
 
 [node name="OverlayLayer" type="TileMapLayer" parent="." unique_id=344069573]
-tile_set = ExtResource("2_u7pue")
+tile_set = ExtResource("3_j1kq6")
 collision_enabled = false
