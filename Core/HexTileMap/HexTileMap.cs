@@ -56,6 +56,25 @@ public partial class HexTileMap : Node2D
         GD.Print("HexMap Ready!");
     }
 
+    public override void _UnhandledInput(InputEvent @event)
+    {
+        if (@event is InputEventMouseButton mouse)
+        {
+            var mapCoords = BaseLayer.LocalToMap(ToLocal(GetGlobalMousePosition()));
+            var hex = mapData[mapCoords];
+            //GD.Print(
+            //    mouse.Position
+            //        + " "
+            //        + mouse.GlobalPosition
+            //        + " "
+            //        + mouse.Pressed
+            //        + " "
+            //        + mouse.ButtonIndex
+            //);
+            GD.Print($"Clicked Hex: {hex}");
+        }
+    }
+
     public Vector2 MapToLocal(Vector2I coords)
     {
         return BaseLayer.MapToLocal(coords);
