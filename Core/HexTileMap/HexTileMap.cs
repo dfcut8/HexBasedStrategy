@@ -25,6 +25,8 @@ public partial class HexTileMap : Node2D
     [Export]
     public int SeedMountain { get; set; } = 0;
 
+    public Hex? CurrentlySelectedHex { get; set; }
+
     private TileMapLayer BaseLayer = null!;
     private TileMapLayer BorderLayer = null!;
     private TileMapLayer OverlayLayer = null!;
@@ -60,15 +62,28 @@ public partial class HexTileMap : Node2D
     {
         if (@event is InputEventMouseButton mouse)
         {
-            if (mouse.Pressed)
+            if (mouse.ButtonMask == MouseButtonMask.Left)
             {
                 var mapCoords = BaseLayer.LocalToMap(ToLocal(GetGlobalMousePosition()));
-                //var hex = mapData[mapCoords];
-                mapData.TryGetValue(mapCoords, out Hex hex);
+                mapData.TryGetValue(mapCoords, out Hex? hex);
                 if (hex is not null)
                 {
                     GD.Print($"Clicked Hex: {hex}");
+                    if (CurrentlySelectedHex is not null)
+                    {
+                        OverlayLayer.SetCell(CurrentlySelectedHex.Coords, 0, new Vector2I(0, 0));
+                    }
+                    OverlayLayer.SetCell(hex.Coords, 0, new Vector2I(0, 1));
+                    CurrentlySelectedHex = hex;
                 }
+            }
+            if (mouse.ButtonMask == MouseButtonMask.Right)
+            {
+                if (CurrentlySelectedHex is not null)
+                {
+                    OverlayLayer.SetCell(CurrentlySelectedHex.Coords, 0, new Vector2I(0, 0));
+                }
+                CurrentlySelectedHex = null;
             }
         }
     }
