@@ -151,40 +151,61 @@ public partial class HexTileMap : Node2D
             {
                 var coords = new Vector2I(x, y);
                 var terrain = GetBaseTerrain(mapValues[x, y], max);
-
-                mapData[coords] = new Hex(coords) { TerrainType = terrain };
+                var hex = new Hex(coords) { TerrainType = terrain };
                 if (
-                    mapData[coords].TerrainType is TerrainType.Plains
+                    hex.TerrainType is TerrainType.Plains
                     && IsDesert(mapValuesDesert[x, y], maxDesert)
                 )
                 {
-                    mapData[coords].TerrainType = TerrainType.Desert;
+                    hex.TerrainType = TerrainType.Desert;
                 }
 
                 if (
-                    mapData[coords].TerrainType is TerrainType.Plains
+                    hex.TerrainType is TerrainType.Plains
                     && IsForest(mapValuesForest[x, y], maxForest)
                 )
                 {
-                    mapData[coords].TerrainType = TerrainType.Forest;
+                    hex.TerrainType = TerrainType.Forest;
                 }
 
                 if (
-                    mapData[coords].TerrainType is TerrainType.Plains
+                    hex.TerrainType is TerrainType.Plains
                     && IsMountain(mapValuesMountain[x, y], maxMountain)
                 )
                 {
-                    mapData[coords].TerrainType = TerrainType.Mountain;
+                    hex.TerrainType = TerrainType.Mountain;
                 }
 
                 // Generate ice on poles
                 if (y < r.Next(iceDepth) + 1 || y > Height - (r.Next(iceDepth) + 1))
                 {
-                    mapData[coords].TerrainType = TerrainType.Ice;
+                    hex.TerrainType = TerrainType.Ice;
                 }
 
-                BaseLayer.SetCell(coords, 0, terrainToTextureCoords[mapData[coords].TerrainType]);
+                BaseLayer.SetCell(coords, 0, terrainToTextureCoords[hex.TerrainType]);
                 BorderLayer.SetCell(coords, 0, Vector2I.Zero);
+
+                switch (hex.TerrainType)
+                {
+                    case TerrainType.Plains:
+                        hex.Food = r.Next(2, 6);
+                        hex.Production = r.Next(0, 2);
+                        break;
+                    case TerrainType.Forest:
+                        hex.Food += r.Next(1, 3);
+                        hex.Production += r.Next(2, 6);
+                        break;
+                    case TerrainType.Desert:
+                        hex.Food = r.Next(0, 1);
+                        hex.Production = r.Next(3, 6);
+                        break;
+                    case TerrainType.Mountain:
+                        hex.Production = r.Next(4, 7);
+                        break;
+                    default:
+                        break;
+                }
+                mapData[coords] = hex;
             }
         }
 
