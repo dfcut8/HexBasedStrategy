@@ -85,6 +85,7 @@ public partial class HexTileMap : Node2D
                 }
                 CurrentlySelectedHex = null;
             }
+            GlobalEvents.RaiseHexSelected(CurrentlySelectedHex);
         }
     }
 

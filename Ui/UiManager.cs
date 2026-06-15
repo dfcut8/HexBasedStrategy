@@ -16,8 +16,8 @@ public partial class UiManager : Node2D
 
     public override void _Process(double delta) { }
 
-    private void OnHexSelected(Hex h)
+    private void OnHexSelected(Hex? h)
     {
-        terrainTile.Update(Hex h);
+        terrainTile?.Update(h);
     }
 }

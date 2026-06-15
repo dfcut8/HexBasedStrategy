@@ -21,5 +21,17 @@ public partial class TerrainTile : Control
 
     public override void _Process(double delta) { }
 
-    public void Update(Hex h) { }
+    public void Update(Hex? h)
+    {
+        if (h is null)
+        {
+            Visible = false;
+            return;
+        }
+
+        Visible = true;
+        terrainLabel?.Text = h.TerrainType.ToString();
+        foodLabel?.Text = h.Food.ToString();
+        productionLabel?.Text = h.Production.ToString();
+    }
 }
