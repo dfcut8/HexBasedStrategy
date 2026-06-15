@@ -4,5 +4,10 @@ namespace HexBasedStrategy.Core;
 
 internal static class GlobalEvents
 {
-    public static Action<HexTileMap> MapGenerationCompleted;
+    public static event Action<HexTileMap>? MapGenerationCompleted;
+
+    public static void RaiseMapGenerationCompleted(HexTileMap map)
+    {
+        MapGenerationCompleted?.Invoke(map);
+    }
 }

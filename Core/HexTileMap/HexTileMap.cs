@@ -209,7 +209,7 @@ public partial class HexTileMap : Node2D
             }
         }
 
-        Callable.From(() => GlobalEvents.MapGenerationCompleted?.Invoke(this)).CallDeferred();
+        Callable.From(() => GlobalEvents.RaiseMapGenerationCompleted(this)).CallDeferred();
         stopwatch.Stop();
         GD.Print($"Terrain cells generation took: {stopwatch.ElapsedMilliseconds} ms.");
     }
