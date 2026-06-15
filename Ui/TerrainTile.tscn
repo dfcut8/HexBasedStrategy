@@ -1,5 +1,6 @@
 [gd_scene format=3 uid="uid://bro8u8vmbd2o"]
 
+[ext_resource type="Script" uid="uid://r6brhd2ve6l0" path="res://Ui/TerrainTile.cs" id="1_llolk"]
 [ext_resource type="Theme" uid="uid://b84t5c7658sy" path="res://Ui/Theme.tres" id="1_o5hy5"]
 
 [node name="TerrainTile" type="Control" unique_id=170682321]
@@ -7,19 +8,19 @@ layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = 439.0
-offset_top = 264.0
-offset_right = 439.0
-offset_bottom = 264.0
+offset_right = -2054.0
+offset_bottom = -1046.0
 grow_horizontal = 2
 grow_vertical = 2
+script = ExtResource("1_llolk")
 
 [node name="Panel" type="Panel" parent="." unique_id=11950191]
 layout_mode = 0
 offset_right = 250.0
 offset_bottom = 250.0
 
-[node name="TextureRect" type="TextureRect" parent="Panel" unique_id=1102543169]
+[node name="TerrainImage" type="TextureRect" parent="Panel" unique_id=1102543169]
+unique_name_in_owner = true
 layout_mode = 0
 offset_right = 250.0
 offset_bottom = 160.0
@@ -35,13 +36,16 @@ theme = ExtResource("1_o5hy5")
 layout_mode = 2
 
 [node name="TerrainLabel" type="Label" parent="Panel/MarginContainer/VBoxContainer" unique_id=1734153878]
+unique_name_in_owner = true
 layout_mode = 2
 text = "Terrain: "
 
 [node name="FoodLabel" type="Label" parent="Panel/MarginContainer/VBoxContainer" unique_id=1428257950]
+unique_name_in_owner = true
 layout_mode = 2
 text = "Food: "
 
 [node name="ProductionLabel" type="Label" parent="Panel/MarginContainer/VBoxContainer" unique_id=164354849]
+unique_name_in_owner = true
 layout_mode = 2
 text = "Production: "
