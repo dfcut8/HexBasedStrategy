@@ -22,7 +22,6 @@ Padding = 400
 
 [node name="UiManager" parent="Hud" unique_id=543244270 instance=ExtResource("3_u44n3")]
 script = ExtResource("4_t88pq")
-terrainUiScene = ExtResource("5_r0x5m")
 
 [node name="TerrainTile" parent="Hud/UiManager" unique_id=170682321 instance=ExtResource("5_r0x5m")]
 unique_name_in_owner = true

@@ -24,6 +24,7 @@ unique_name_in_owner = true
 layout_mode = 0
 offset_right = 250.0
 offset_bottom = 160.0
+expand_mode = 2
 
 [node name="MarginContainer" type="MarginContainer" parent="Panel" unique_id=2063611939]
 layout_mode = 0
