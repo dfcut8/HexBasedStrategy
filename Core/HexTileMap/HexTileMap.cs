@@ -244,7 +244,7 @@ public partial class HexTileMap : Node2D
             civ.Cities.Add(city);
             AddChild(city);
 
-            city.ter
+            city.Territory.ForEach(h => OverlayLayer.SetCell(h.Coords, 0, new Vector2I(0, 1), 0));
         }
     }
 

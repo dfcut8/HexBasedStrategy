@@ -33,6 +33,6 @@ public partial class City : Node2D
         {
             hex.CityOwner = this;
         }
-        territory?.AddRange(hexesToAdd);
+        Territory.AddRange(hexesToAdd);
     }
 }
