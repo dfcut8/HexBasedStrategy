@@ -16,37 +16,60 @@ script = ExtResource("1_llolk")
 
 [node name="Panel" type="Panel" parent="." unique_id=11950191]
 layout_mode = 0
-offset_right = 250.0
-offset_bottom = 250.0
+offset_right = 450.0
+offset_bottom = 450.0
 
 [node name="TerrainImage" type="TextureRect" parent="Panel" unique_id=1102543169]
 unique_name_in_owner = true
-layout_mode = 0
-offset_right = 250.0
-offset_bottom = 160.0
+custom_minimum_size = Vector2(0, 350)
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+grow_horizontal = 2
 expand_mode = 2
 
 [node name="MarginContainer" type="MarginContainer" parent="Panel" unique_id=2063611939]
-layout_mode = 0
-offset_top = 160.0
-offset_right = 94.0
-offset_bottom = 237.0
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_top = -97.0
+offset_right = 114.0
+grow_vertical = 0
 theme = ExtResource("1_o5hy5")
 
-[node name="VBoxContainer" type="VBoxContainer" parent="Panel/MarginContainer" unique_id=761119251]
+[node name="HBoxContainer" type="HBoxContainer" parent="Panel/MarginContainer" unique_id=1593451310]
 layout_mode = 2
 
-[node name="TerrainLabel" type="Label" parent="Panel/MarginContainer/VBoxContainer" unique_id=1734153878]
-unique_name_in_owner = true
+[node name="Labels" type="VBoxContainer" parent="Panel/MarginContainer/HBoxContainer" unique_id=234086024]
+layout_mode = 2
+
+[node name="Terrain" type="Label" parent="Panel/MarginContainer/HBoxContainer/Labels" unique_id=588184753]
 layout_mode = 2
 text = "Terrain: "
 
-[node name="FoodLabel" type="Label" parent="Panel/MarginContainer/VBoxContainer" unique_id=1428257950]
-unique_name_in_owner = true
+[node name="Food" type="Label" parent="Panel/MarginContainer/HBoxContainer/Labels" unique_id=2071144863]
 layout_mode = 2
 text = "Food: "
 
-[node name="ProductionLabel" type="Label" parent="Panel/MarginContainer/VBoxContainer" unique_id=164354849]
-unique_name_in_owner = true
+[node name="Production" type="Label" parent="Panel/MarginContainer/HBoxContainer/Labels" unique_id=1388617184]
 layout_mode = 2
 text = "Production: "
+
+[node name="Values" type="VBoxContainer" parent="Panel/MarginContainer/HBoxContainer" unique_id=761119251]
+layout_mode = 2
+
+[node name="TerrainLabel" type="Label" parent="Panel/MarginContainer/HBoxContainer/Values" unique_id=1734153878]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Plains"
+
+[node name="FoodLabel" type="Label" parent="Panel/MarginContainer/HBoxContainer/Values" unique_id=1428257950]
+unique_name_in_owner = true
+layout_mode = 2
+text = "0"
+
+[node name="ProductionLabel" type="Label" parent="Panel/MarginContainer/HBoxContainer/Values" unique_id=164354849]
+unique_name_in_owner = true
+layout_mode = 2
+text = "0"
