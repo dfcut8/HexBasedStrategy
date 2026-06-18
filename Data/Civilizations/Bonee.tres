@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="CivilizationData" format=3 uid="uid://ddyl7g15setig"]
+
+[ext_resource type="Script" uid="uid://ddaq2kxha5vtp" path="res://Data/CivilizationData.cs" id="1_yrd64"]
+
+[resource]
+script = ExtResource("1_yrd64")
+Name = "Bonee"
+Color = Color(0, 1, 0, 1)
+Description = "Want to know everything"
+metadata/_custom_type_script = "uid://ddaq2kxha5vtp"
