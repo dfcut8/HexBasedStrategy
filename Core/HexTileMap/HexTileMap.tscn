@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://d3l6yl3afn0aj"]
 
 [ext_resource type="Script" uid="uid://hm8k1opkeosr" path="res://Core/HexTileMap/HexTileMap.cs" id="1_nf81f"]
+[ext_resource type="PackedScene" uid="uid://davvtmwx3hi5c" path="res://Objects/City.tscn" id="2_6kmdn"]
 [ext_resource type="TileSet" uid="uid://c7yajr885fmuk" path="res://Tilesets/BaseTileset.tres" id="2_u7pue"]
 [ext_resource type="TileSet" uid="uid://di4yv0nmj6pwy" path="res://Tilesets/OverlayTileset.tres" id="3_j1kq6"]
 
@@ -8,6 +9,7 @@
 script = ExtResource("1_nf81f")
 Width = 200
 Height = 200
+cityScene = ExtResource("2_6kmdn")
 
 [node name="BaseLayer" type="TileMapLayer" parent="." unique_id=1801497008]
 tile_set = ExtResource("2_u7pue")

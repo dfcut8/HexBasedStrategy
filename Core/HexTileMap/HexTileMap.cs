@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using Godot;
+using HexBasedStrategy.Objects;
 
 namespace HexBasedStrategy.Core;
 
@@ -24,6 +25,9 @@ public partial class HexTileMap : Node2D
 
     [Export]
     public int SeedMountain { get; set; } = 0;
+
+    [Export]
+    private PackedScene? cityScene { get; set; }
 
     public Hex? CurrentlySelectedHex { get; set; }
 
@@ -56,6 +60,8 @@ public partial class HexTileMap : Node2D
         GenerateTerrain();
 
         GD.Print("HexMap Ready!");
+
+        CreateCity(new Civilization(), new Vector2I(20, 20), "Boston");
     }
 
     public override void _UnhandledInput(InputEvent @event)
@@ -213,6 +219,19 @@ public partial class HexTileMap : Node2D
         Callable.From(() => GlobalEvents.RaiseMapGenerationCompleted(this)).CallDeferred();
         stopwatch.Stop();
         GD.Print($"Terrain cells generation took: {stopwatch.ElapsedMilliseconds} ms.");
+    }
+
+    private void CreateCity(Civilization civ, Vector2I coords, string name)
+    {
+        if (cityScene is null)
+        {
+            GD.PrintErr("City scene is not provided!");
+            GetTree().Quit(1);
+        }
+        var city = cityScene?.Instantiate<City>();
+        city?.Position = BaseLayer.MapToLocal(coords);
+        city?.CityName = name;
+        AddChild(city);
     }
 
     private static FastNoiseLite CreateNoise(int seed)
