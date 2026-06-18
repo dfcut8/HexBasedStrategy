@@ -228,10 +228,19 @@ public partial class HexTileMap : Node2D
             GD.PrintErr("City scene is not provided!");
             GetTree().Quit(1);
         }
+
         var city = cityScene?.Instantiate<City>();
-        city?.Position = BaseLayer.MapToLocal(coords);
-        city?.CityName = name;
-        AddChild(city);
+        if (city is not null)
+        {
+            city.Position = BaseLayer.MapToLocal(coords);
+            city.Center = coords;
+            city.CityName = name;
+            city.CityOwner = civ;
+            city.Map = this;
+
+            civ.Cities.Add(city);
+            AddChild(city);
+        }
     }
 
     private static FastNoiseLite CreateNoise(int seed)

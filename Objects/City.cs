@@ -6,11 +6,14 @@ namespace HexBasedStrategy.Objects;
 
 public partial class City : Node2D
 {
-    private HexTileMap? map;
-    private Vector2I? center;
+    public string CityName { get; set; } = string.Empty;
+    public Civilization? CityOwner { get; set; }
+    public HexTileMap? Map { private get; set; }
+    public Vector2I? Center { get; set; }
+
     private List<Hex?>? territory;
     private List<Hex?>? territoryPool;
-    public string CityName { get; set; } = string.Empty;
+
     private Label? label;
     private Sprite2D? sprite;
 
