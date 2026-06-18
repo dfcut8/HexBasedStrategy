@@ -61,7 +61,8 @@ public partial class HexTileMap : Node2D
 
         GD.Print("HexMap Ready!");
 
-        CreateCity(new Civilization(), new Vector2I(20, 20), "Boston");
+        CreateCity(new Civilization() { Color = Colors.Red }, new Vector2I(0, 0), "Boston");
+        CreateCity(new Civilization() { Color = Colors.Blue }, new Vector2I(20, 20), "Chicago");
     }
 
     public override void _UnhandledInput(InputEvent @event)
@@ -235,12 +236,30 @@ public partial class HexTileMap : Node2D
             city.Position = BaseLayer.MapToLocal(coords);
             city.Center = coords;
             city.CityName = name;
-            city.CityOwner = civ;
+            city.OwnerCiv = civ;
             city.Map = this;
+
+            city.PopulateTerritory(GetSurroundingHexes(city.Center));
 
             civ.Cities.Add(city);
             AddChild(city);
+
+            city.ter
         }
+    }
+
+    private List<Hex> GetSurroundingHexes(Vector2I center)
+    {
+        var result = new List<Hex>();
+        foreach (var coords in BaseLayer.GetSurroundingCells(center))
+        {
+            var h = mapData.GetValueOrDefault(coords);
+            if (h is not null && h.CityOwner is null)
+            {
+                result.Add(h);
+            }
+        }
+        return result;
     }
 
     private static FastNoiseLite CreateNoise(int seed)
