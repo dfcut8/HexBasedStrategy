@@ -9,6 +9,7 @@
 [ext_resource type="Resource" uid="uid://ccbng25gq40of" path="res://Data/Civilizations/Krig.tres" id="4_b8wnr"]
 [ext_resource type="Script" uid="uid://cntp728du837d" path="res://Ui/UiManager.cs" id="5_3ywx5"]
 [ext_resource type="PackedScene" uid="uid://bro8u8vmbd2o" path="res://Ui/TerrainTile.tscn" id="6_ofirr"]
+[ext_resource type="PackedScene" uid="uid://davvtmwx3hi5c" path="res://Objects/City.tscn" id="7_o1d26"]
 
 [node name="Level" type="Node" unique_id=692662400]
 script = ExtResource("1_m3clv")
@@ -23,6 +24,10 @@ Velocity = 155
 Padding = 400
 
 [node name="HexTileMap" parent="." unique_id=393018333 instance=ExtResource("3_4eo0i")]
+unique_name_in_owner = true
+Width = 20
+Height = 20
+CityScene = ExtResource("7_o1d26")
 
 [node name="Hud" type="CanvasLayer" parent="." unique_id=197025801]
 

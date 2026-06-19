@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 using Godot;
 using HexBasedStrategy.Objects;
 
@@ -58,11 +59,10 @@ public partial class HexTileMap : Node2D
         OverlayLayer = GetNode<TileMapLayer>("OverlayLayer");
 
         GenerateTerrain();
-
         GD.Print("HexMap Ready!");
 
-        CreateCity(new Civilization() { Color = Colors.Red }, new Vector2I(0, 0), "Boston");
-        CreateCity(new Civilization() { Color = Colors.Blue }, new Vector2I(20, 20), "Chicago");
+        // CreateCity(new Civilization() { Color = Colors.Red }, new Vector2I(0, 0), "Boston");
+        // CreateCity(new Civilization() { Color = Colors.Blue }, new Vector2I(20, 20), "Chicago");
     }
 
     public override void _UnhandledInput(InputEvent @event)
@@ -245,6 +245,19 @@ public partial class HexTileMap : Node2D
 
             civ.Cities.Add(city);
             AddChild(city);
+        }
+    }
+
+    public void GenerateCivStartingLocations(List<Civilization> civilizations)
+    {
+        var plains = mapData
+            .Where(kv => kv.Value.TerrainType == TerrainType.Plains)
+            .Select(kv => kv.Value)
+            .ToList();
+        var r = new Random();
+        foreach (var civ in civilizations)
+        {
+            CreateCity(civ, plains[r.Next(plains.Count)].Coords, $"{civ.Name}|X");
         }
     }
 
