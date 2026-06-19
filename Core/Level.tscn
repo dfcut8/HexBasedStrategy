@@ -1,14 +1,18 @@
 [gd_scene format=3 uid="uid://bxfxitnfjsg0i"]
 
 [ext_resource type="Script" uid="uid://dl44a35a0s7il" path="res://Core/Level.cs" id="1_m3clv"]
+[ext_resource type="Resource" uid="uid://p0fdv2drhhak" path="res://Data/Civilizations/Azire.tres" id="2_f0br3"]
 [ext_resource type="Script" uid="uid://cvu4q2tke4llv" path="res://Core/Camera/Camera.cs" id="2_mxnmf"]
 [ext_resource type="PackedScene" uid="uid://d3l6yl3afn0aj" path="res://Core/HexTileMap/HexTileMap.tscn" id="3_4eo0i"]
+[ext_resource type="Resource" uid="uid://ddyl7g15setig" path="res://Data/Civilizations/Bonee.tres" id="3_o1d26"]
 [ext_resource type="PackedScene" uid="uid://bq8hietx5y8pu" path="res://Ui/UiManager.tscn" id="4_86ljf"]
+[ext_resource type="Resource" uid="uid://ccbng25gq40of" path="res://Data/Civilizations/Krig.tres" id="4_b8wnr"]
 [ext_resource type="Script" uid="uid://cntp728du837d" path="res://Ui/UiManager.cs" id="5_3ywx5"]
 [ext_resource type="PackedScene" uid="uid://bro8u8vmbd2o" path="res://Ui/TerrainTile.tscn" id="6_ofirr"]
 
 [node name="Level" type="Node" unique_id=692662400]
 script = ExtResource("1_m3clv")
+CivilizationDataList = [ExtResource("2_f0br3"), ExtResource("3_o1d26"), ExtResource("4_b8wnr")]
 
 [node name="Camera" type="Camera2D" parent="." unique_id=332791322]
 position = Vector2(1500, 1500)
