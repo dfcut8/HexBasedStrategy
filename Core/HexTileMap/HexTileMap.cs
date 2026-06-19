@@ -60,9 +60,6 @@ public partial class HexTileMap : Node2D
 
         GenerateTerrain();
         GD.Print("HexMap Ready!");
-
-        // CreateCity(new Civilization() { Color = Colors.Red }, new Vector2I(0, 0), "Boston");
-        // CreateCity(new Civilization() { Color = Colors.Blue }, new Vector2I(20, 20), "Chicago");
     }
 
     public override void _UnhandledInput(InputEvent @event)
@@ -222,12 +219,13 @@ public partial class HexTileMap : Node2D
         GD.Print($"Terrain cells generation took: {stopwatch.ElapsedMilliseconds} ms.");
     }
 
-    private void CreateCity(Civilization civ, Vector2I coords, string name)
+    private City? CreateCity(Civilization civ, Vector2I coords, string name)
     {
         if (CityScene is null)
         {
             GD.PrintErr("City scene is not provided!");
             GetTree().Quit(1);
+            return null;
         }
 
         var city = CityScene?.Instantiate<City>();
@@ -238,14 +236,11 @@ public partial class HexTileMap : Node2D
             city.CityName = name;
             city.OwnerCiv = civ;
             city.Map = this;
-
             city.PopulateTerritory(GetSurroundingHexes(city.Center));
-
             mapData[coords].IsCityCenter = true;
-
-            civ.Cities.Add(city);
             AddChild(city);
         }
+        return city;
     }
 
     public void GenerateCivStartingLocations(List<Civilization> civilizations)
@@ -259,12 +254,40 @@ public partial class HexTileMap : Node2D
         // TODO: Check if there is another civ near-by...
         foreach (var civ in civilizations)
         {
-            CreateCity(
+            var maxAttempts = 1000;
+            var currentAttempt = 0;
+            var foundValidLocation = false;
+            var location = new Vector2I();
+            while (!foundValidLocation && currentAttempt < maxAttempts)
+            {
+                location = plains[r.Next(plains.Count)].Coords;
+                foundValidLocation = IsLocationValid(location);
+                currentAttempt++;
+            }
+            var city = CreateCity(
                 civ,
-                plains[r.Next(plains.Count)].Coords,
+                location,
                 $"{civ.Name}|{civ.CityNames[r.Next(civ.CityNames.Count)]}"
             );
+            if (city is not null)
+            {
+                civ.Cities.Add(city);
+            }
+            else
+            {
+                GD.PrintErr("Wasn't able to create city at location.");
+            }
         }
+    }
+
+    private bool IsLocationValid(Vector2I coords)
+    {
+        if (coords.X < 3 || coords.X > Width - 3 || coords.Y > 3 || coords.Y < Height - 3)
+        {
+            return true;
+        }
+
+        return false;
     }
 
     private void UpdateCivOwnedHexes(Civilization civ)
