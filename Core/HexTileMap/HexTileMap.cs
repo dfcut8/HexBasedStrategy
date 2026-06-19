@@ -27,7 +27,7 @@ public partial class HexTileMap : Node2D
     public int SeedMountain { get; set; } = 0;
 
     [Export]
-    private PackedScene? cityScene { get; set; }
+    private PackedScene? CityScene { get; set; }
 
     public Hex? CurrentlySelectedHex { get; set; }
 
@@ -224,13 +224,13 @@ public partial class HexTileMap : Node2D
 
     private void CreateCity(Civilization civ, Vector2I coords, string name)
     {
-        if (cityScene is null)
+        if (CityScene is null)
         {
             GD.PrintErr("City scene is not provided!");
             GetTree().Quit(1);
         }
 
-        var city = cityScene?.Instantiate<City>();
+        var city = CityScene?.Instantiate<City>();
         if (city is not null)
         {
             city.Position = BaseLayer.MapToLocal(coords);
@@ -241,10 +241,22 @@ public partial class HexTileMap : Node2D
 
             city.PopulateTerritory(GetSurroundingHexes(city.Center));
 
+            mapData[coords].IsCityCenter = true;
+
             civ.Cities.Add(city);
             AddChild(city);
+        }
+    }
 
-            city.Territory.ForEach(h => OverlayLayer.SetCell(h.Coords, 0, new Vector2I(0, 1), 0));
+    private void UpdateCivOwnedHexes(Civilization civ)
+    {
+        foreach (var city in civ.Cities)
+        {
+            foreach (var h in city.Territory)
+            {
+                // TODO
+                GD.Print("Painting");
+            }
         }
     }
 
