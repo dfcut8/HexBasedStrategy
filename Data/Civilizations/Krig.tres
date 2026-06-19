@@ -7,4 +7,5 @@ script = ExtResource("1_qt2l1")
 Name = "Krig"
 Color = Color(0, 0, 1, 1)
 Description = "Want to kill everyone"
+CityNames = PackedStringArray("Hive1", "Colony1", "Colony2")
 metadata/_custom_type_script = "uid://ddaq2kxha5vtp"

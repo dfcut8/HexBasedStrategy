@@ -7,4 +7,5 @@ script = ExtResource("1_yrd64")
 Name = "Bonee"
 Color = Color(0, 1, 0, 1)
 Description = "Want to know everything"
+CityNames = PackedStringArray("Lab 01", "Lab 02", "Lab 03")
 metadata/_custom_type_script = "uid://ddaq2kxha5vtp"

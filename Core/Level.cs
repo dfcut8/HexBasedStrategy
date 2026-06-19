@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using Godot;
 using HexBasedStrategy.Data;
 using HexBasedStrategy.Objects;
@@ -25,7 +26,12 @@ public partial class Level : Node
     {
         foreach (var cd in CivilizationDataList)
         {
-            var civ = new Civilization() { Color = cd.Color, Name = cd.Name };
+            var civ = new Civilization()
+            {
+                Color = cd.Color,
+                Name = cd.Name,
+                CityNames = [.. cd.CityNames],
+            };
             Civilizations.Add(civ);
         }
         hexTileMap.GenerateCivStartingLocations(Civilizations);

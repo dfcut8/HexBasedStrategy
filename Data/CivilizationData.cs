@@ -13,4 +13,7 @@ public partial class CivilizationData : Resource
 
     [Export]
     public string Description { get; set; } = string.Empty;
+
+    [Export]
+    public string[] CityNames { get; set; } = [];
 }

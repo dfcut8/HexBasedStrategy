@@ -255,9 +255,15 @@ public partial class HexTileMap : Node2D
             .Select(kv => kv.Value)
             .ToList();
         var r = new Random();
+
+        // TODO: Check if there is another civ near-by...
         foreach (var civ in civilizations)
         {
-            CreateCity(civ, plains[r.Next(plains.Count)].Coords, $"{civ.Name}|X");
+            CreateCity(
+                civ,
+                plains[r.Next(plains.Count)].Coords,
+                $"{civ.Name}|{civ.CityNames[r.Next(civ.CityNames.Count)]}"
+            );
         }
     }
 

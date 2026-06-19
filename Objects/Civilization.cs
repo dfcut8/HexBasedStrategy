@@ -10,5 +10,6 @@ public class Civilization
     public List<City> Cities { get; set; } = [];
     public Color Color { get; set; } = Colors.White;
     public string Name { get; set; } = String.Empty;
-    public bool PlayerControllered { get; set; } = false;
+    public bool PlayerControlled { get; set; } = false;
+    public List<string> CityNames { get; set; } = [];
 }
