@@ -24,8 +24,6 @@ public class Civilization
 
     private HashSet<string> availableCityNames = [];
 
-    public Civilization() { }
-
     public string GetAndRemoveRandomCityNameFromAvailableCityNames()
     {
         var i = Random.Shared.Next(availableCityNames.Count);
