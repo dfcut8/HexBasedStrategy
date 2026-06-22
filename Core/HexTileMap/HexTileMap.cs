@@ -258,17 +258,16 @@ public partial class HexTileMap : Node2D
             var currentAttempt = 0;
             var foundValidLocation = false;
             var location = Vector2I.Zero;
-            while (!foundValidLocation || currentAttempt < maxAttempts)
+            while (!foundValidLocation)
             {
                 location = plains[r.Next(plains.Count)].Coords;
                 foundValidLocation = IsLocationValid(location);
                 currentAttempt++;
-            }
-
-            if (!foundValidLocation)
-            {
-                GD.PrintErr("Failed to found starting location for civilization");
-                GetTree().Quit(1);
+                if (currentAttempt >= maxAttempts)
+                {
+                    GD.PrintErr("Failed to found starting location for civilization");
+                    GetTree().Quit(1);
+                }
             }
 
             var city = CreateCity(
@@ -290,10 +289,14 @@ public partial class HexTileMap : Node2D
 
     private bool IsLocationValid(Vector2I coords)
     {
-        if (coords.X < 3 || coords.X > Width - 3 || coords.Y > 3 || coords.Y < Height - 3)
+        if ((coords.X > 3 && coords.X < Width - 3) && (coords.Y > 3 && coords.Y < Height - 3))
         {
             return true;
         }
+
+        var allHexInRadius = BaseLayer.GetSurroundingCells(coords);
+
+        allHexInRadius.Any(x => mapData[x].CityOwner is not null);
 
         return false;
     }
