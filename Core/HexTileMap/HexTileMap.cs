@@ -257,18 +257,26 @@ public partial class HexTileMap : Node2D
             var maxAttempts = 1000;
             var currentAttempt = 0;
             var foundValidLocation = false;
-            var location = new Vector2I();
-            while (!foundValidLocation && currentAttempt < maxAttempts)
+            var location = Vector2I.Zero;
+            while (!foundValidLocation || currentAttempt < maxAttempts)
             {
                 location = plains[r.Next(plains.Count)].Coords;
                 foundValidLocation = IsLocationValid(location);
                 currentAttempt++;
             }
+
+            if (!foundValidLocation)
+            {
+                GD.PrintErr("Failed to found starting location for civilization");
+                GetTree().Quit(1);
+            }
+
             var city = CreateCity(
                 civ,
                 location,
-                $"{civ.Name}|{civ.CityNames[r.Next(civ.CityNames.Count)]}"
+                $"{civ.Name}|{civ.GetAndRemoveRandomCityNameFromAvailableCityNames()}"
             );
+
             if (city is not null)
             {
                 civ.Cities.Add(city);
