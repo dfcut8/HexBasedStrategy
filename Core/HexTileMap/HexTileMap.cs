@@ -222,6 +222,8 @@ public partial class HexTileMap : Node2D
 
     private City? CreateCity(Civilization civ, Vector2I coords, string name)
     {
+        // TODO: Add recursion to mark all surr hexes owned by the city.
+
         if (CityScene is null)
         {
             GD.PrintErr("City scene is not provided!");
@@ -302,7 +304,7 @@ public partial class HexTileMap : Node2D
                 GD.Print(
                     $"Trying to find a good location for new city. Coords={coords}, Distance to '{city.CityName}': {distance}"
                 );
-                if (distance <= 7)
+                if (distance <= 12)
                 {
                     return false;
                 }
