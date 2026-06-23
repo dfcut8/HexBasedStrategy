@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Dynamic;
 using System.Linq;
 using Godot;
 using HexBasedStrategy.Objects;
@@ -261,7 +262,7 @@ public partial class HexTileMap : Node2D
             while (!foundValidLocation)
             {
                 location = plains[r.Next(plains.Count)].Coords;
-                foundValidLocation = IsLocationValid(location);
+                foundValidLocation = IsLocationValid(location, civilizations);
                 currentAttempt++;
                 if (currentAttempt >= maxAttempts)
                 {
@@ -287,18 +288,28 @@ public partial class HexTileMap : Node2D
         }
     }
 
-    private bool IsLocationValid(Vector2I coords)
+    private bool IsLocationValid(Vector2I coords, List<Civilization> civilizations)
     {
+        var valid = false;
         if ((coords.X > 3 && coords.X < Width - 3) && (coords.Y > 3 && coords.Y < Height - 3))
         {
-            return true;
+            valid = true;
         }
-
-        var allHexInRadius = BaseLayer.GetSurroundingCells(coords);
-
-        allHexInRadius.Any(x => mapData[x].CityOwner is not null);
-
-        return false;
+        foreach (var civ in civilizations)
+        {
+            foreach (var city in civ.Cities)
+            {
+                var distance = coords.DistanceTo(city.Center);
+                GD.Print(
+                    $"Trying to find a good location for new city. Coords={coords}, Distance to '{city.CityName}': {distance}"
+                );
+                if (distance <= 7)
+                {
+                    valid = false;
+                }
+            }
+        }
+        return valid;
     }
 
     private void UpdateCivOwnedHexes(Civilization civ)
