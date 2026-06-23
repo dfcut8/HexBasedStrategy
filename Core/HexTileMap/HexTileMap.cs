@@ -31,6 +31,9 @@ public partial class HexTileMap : Node2D
     [Export]
     private PackedScene? CityScene { get; set; }
 
+    [Export]
+    private PackedScene? HexOverlayScene { get; set; }
+
     public Hex? CurrentlySelectedHex { get; set; }
 
     private TileMapLayer BaseLayer = null!;
@@ -239,9 +242,10 @@ public partial class HexTileMap : Node2D
             city.CityName = name;
             city.OwnerCiv = civ;
             city.Map = this;
-            city.PopulateTerritory(GetSurroundingHexes(city.Center));
+            //city.PopulateTerritory(GetSurroundingHexes(city.Center));
             mapData[coords].IsCityCenter = true;
             AddChild(city);
+            markAllTilesInRadiusAsOwnedByCity(city, city.Center, 3);
         }
         return city;
     }
@@ -313,6 +317,40 @@ public partial class HexTileMap : Node2D
         return true;
     }
 
+    private void markAllTilesInRadiusAsOwnedByCity(
+        City city,
+        Vector2I center,
+        int maxRadius,
+        int radius = 1
+    )
+    {
+        if (radius > maxRadius)
+        {
+            return;
+        }
+        var hexes = GetSurroundingHexes(center);
+        foreach (var hex in hexes)
+        {
+            if (hex.CityOwner == city || hex.IsCityCenter)
+            {
+                // We already marked this node
+                continue;
+            }
+            var hexOverlay = HexOverlayScene?.Instantiate() as HexOverlay;
+            if (hexOverlay == null)
+            {
+                GD.PrintErr("Hex Overlay scene not fould");
+                GetTree().Quit(1);
+            }
+
+            hexOverlay?.Position = BaseLayer.MapToLocal(hex.Coords);
+            AddChild(hexOverlay);
+            hexOverlay?.UpdateLabel($"{hex.Food}|{hex.Production} ({radius})");
+            hex.CityOwner = city;
+            markAllTilesInRadiusAsOwnedByCity(city, hex.Coords, maxRadius, radius + 1);
+        }
+    }
+
     private void UpdateCivOwnedHexes(Civilization civ)
     {
         foreach (var city in civ.Cities)
@@ -331,7 +369,8 @@ public partial class HexTileMap : Node2D
         foreach (var coords in BaseLayer.GetSurroundingCells(center))
         {
             var h = mapData.GetValueOrDefault(coords);
-            if (h is not null && h.CityOwner is null)
+            //if (h is not null && h.CityOwner is null)
+            if (h is not null)
             {
                 result.Add(h);
             }

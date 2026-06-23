@@ -1,0 +1,21 @@
+[gd_scene format=3 uid="uid://c76w4iiieqqyg"]
+
+[ext_resource type="Script" uid="uid://lrlddjt4puhf" path="res://Objects/HexOverlay.cs" id="1_cfrrg"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_5i805"]
+font_size = 12
+
+[node name="HexOverlay" type="Node2D" unique_id=2002769366]
+script = ExtResource("1_cfrrg")
+
+[node name="Panel" type="Panel" parent="." unique_id=1914311798]
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Label" type="Label" parent="Panel" unique_id=1138229319]
+unique_name_in_owner = true
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 23.0
+text = "OVER"
+label_settings = SubResource("LabelSettings_5i805")
