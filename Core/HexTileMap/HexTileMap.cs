@@ -290,10 +290,9 @@ public partial class HexTileMap : Node2D
 
     private bool IsLocationValid(Vector2I coords, List<Civilization> civilizations)
     {
-        var valid = false;
-        if ((coords.X > 3 && coords.X < Width - 3) && (coords.Y > 3 && coords.Y < Height - 3))
+        if ((coords.X < 3 || coords.X > Width - 3) || (coords.Y < 3 && coords.Y > Height - 3))
         {
-            valid = true;
+            return false;
         }
         foreach (var civ in civilizations)
         {
@@ -305,11 +304,11 @@ public partial class HexTileMap : Node2D
                 );
                 if (distance <= 7)
                 {
-                    valid = false;
+                    return false;
                 }
             }
         }
-        return valid;
+        return true;
     }
 
     private void UpdateCivOwnedHexes(Civilization civ)
