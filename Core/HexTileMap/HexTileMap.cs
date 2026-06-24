@@ -329,7 +329,7 @@ public partial class HexTileMap : Node2D
             {
                 if (hex.CityOwner != city)
                 {
-                    CreateHexOverlayAtTile(hex.Coords, i.ToString());
+                    CreateHexOverlayAtTile(hex.Coords, i.ToString(), city.OwnerCiv);
                     hex.CityOwner = city;
                     var hexesInNextRadius = radiusToHexMap.GetValueOrDefault(i + 1);
                     if (hexesInNextRadius is null)
@@ -343,7 +343,7 @@ public partial class HexTileMap : Node2D
         }
     }
 
-    private void CreateHexOverlayAtTile(Vector2I coords, string text)
+    private void CreateHexOverlayAtTile(Vector2I coords, string text, Civilization owner)
     {
         var hexOverlay = HexOverlayScene?.Instantiate() as HexOverlay;
         if (hexOverlay == null)
@@ -354,6 +354,7 @@ public partial class HexTileMap : Node2D
         hexOverlay?.Position = BaseLayer.MapToLocal(coords);
         AddChild(hexOverlay);
         hexOverlay?.UpdateLabel(text);
+        hexOverlay?.UpdateColor(owner.Color);
     }
 
     private void UpdateCivOwnedHexes(Civilization civ)
