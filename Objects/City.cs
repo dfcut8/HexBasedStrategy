@@ -10,7 +10,6 @@ public partial class City : Node2D
     public required Civilization OwnerCiv { get; set; }
     public HexTileMap? Map { private get; set; }
     public Vector2I Center { get; set; } = Vector2I.Zero;
-
     public List<Hex> Territory { get; private set; } = [];
     public List<Hex> TerritoryPool { get; private set; } = [];
 
