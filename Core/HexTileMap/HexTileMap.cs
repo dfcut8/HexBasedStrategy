@@ -242,7 +242,6 @@ public partial class HexTileMap : Node2D
             city.CityName = name;
             city.OwnerCiv = civ;
             city.Map = this;
-            //city.PopulateTerritory(GetSurroundingHexes(city.Center));
             mapData[coords].IsCityCenter = true;
             mapData[coords].CityOwner = city;
             AddChild(city);

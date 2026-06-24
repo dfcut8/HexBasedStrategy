@@ -26,32 +26,4 @@ public partial class City : Node2D
     }
 
     public override void _Process(double delta) { }
-
-    public void PopulateTerritory(List<Hex> hexesToAdd)
-    {
-        foreach (var hex in hexesToAdd)
-        {
-            hex.CityOwner = this;
-        }
-        Territory.AddRange(hexesToAdd);
-    }
-
-    //public void PopulateTerritoryFromCoords(
-    //    Vector2I coords,
-    //    int radius,
-    //    int maxRadius,
-    //    TileMapLayer layer
-    //)
-    //{
-    //    if (radius > maxRadius)
-    //    {
-    //        return;
-    //    }
-
-    //    var hexes = layer.GetSurroundingCells(coords);
-    //    foreach (var hex in hexes)
-    //    {
-
-    //    }
-    //}
 }
