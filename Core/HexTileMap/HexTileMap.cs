@@ -332,7 +332,7 @@ public partial class HexTileMap : Node2D
                 {
                     CreateHexOverlayAtTile(hex.Coords, i.ToString());
                     hex.CityOwner = city;
-                    radiusToHexMap.TryGetValue(i + 1, out var hexesInNextRadius);
+                    var hexesInNextRadius = radiusToHexMap.GetValueOrDefault(i + 1);
                     if (hexesInNextRadius is null)
                     {
                         hexesInNextRadius = [];
