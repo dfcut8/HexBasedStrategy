@@ -244,6 +244,7 @@ public partial class HexTileMap : Node2D
             city.Map = this;
             //city.PopulateTerritory(GetSurroundingHexes(city.Center));
             mapData[coords].IsCityCenter = true;
+            mapData[coords].CityOwner = city;
             AddChild(city);
             MarkAllTilesInRadiusAsOwnedByCity(city, 3);
         }
@@ -317,40 +318,6 @@ public partial class HexTileMap : Node2D
         return true;
     }
 
-    //private void markAllTilesInRadiusAsOwnedByCity(
-    //    City city,
-    //    Vector2I center,
-    //    int maxRadius,
-    //    int radius = 1
-    //)
-    //{
-    //    if (radius > maxRadius)
-    //    {
-    //        return;
-    //    }
-    //    var hexes = GetSurroundingHexes(center);
-    //    foreach (var hex in hexes)
-    //    {
-    //        if (hex.CityOwner == city || hex.IsCityCenter)
-    //        {
-    //            // We already marked this node
-    //            continue;
-    //        }
-    //        var hexOverlay = HexOverlayScene?.Instantiate() as HexOverlay;
-    //        if (hexOverlay == null)
-    //        {
-    //            GD.PrintErr("Hex Overlay scene not fould");
-    //            GetTree().Quit(1);
-    //        }
-
-    //        hexOverlay?.Position = BaseLayer.MapToLocal(hex.Coords);
-    //        AddChild(hexOverlay);
-    //        hexOverlay?.UpdateLabel($"{hex.Food}|{hex.Production} ({radius})");
-    //        hex.CityOwner = city;
-    //        markAllTilesInRadiusAsOwnedByCity(city, hex.Coords, maxRadius, radius + 1);
-    //    }
-    //}
-
     private void MarkAllTilesInRadiusAsOwnedByCity(City city, int radiusInTiles)
     {
         Dictionary<int, List<Hex>> radiusToHexMap = [];
@@ -363,18 +330,15 @@ public partial class HexTileMap : Node2D
             {
                 if (hex.CityOwner != city)
                 {
-                    CreateHexOverlayAtTile(hex.Coords, radiusInTiles.ToString());
+                    CreateHexOverlayAtTile(hex.Coords, i.ToString());
                     hex.CityOwner = city;
                     radiusToHexMap.TryGetValue(i + 1, out var hexesInNextRadius);
                     if (hexesInNextRadius is null)
                     {
-                        radiusToHexMap[i + 1] = GetSurroundingHexes(hex.Coords);
+                        hexesInNextRadius = [];
+                        radiusToHexMap[i + 1] = hexesInNextRadius;
                     }
-                    else
-                    {
-                        hexesInNextRadius.AddRange(GetSurroundingHexes(hex.Coords));
-                    }
-                    //hexesInNextRadius ?? hexesInNextRadius.AddRange(GetSurroundingHexes(hex.Coords)) : hexesInNextRadius = GetSurroundingHexes(hex.Coords);
+                    hexesInNextRadius.AddRange(GetSurroundingHexes(hex.Coords));
                 }
             }
         }
