@@ -245,7 +245,7 @@ public partial class HexTileMap : Node2D
             //city.PopulateTerritory(GetSurroundingHexes(city.Center));
             mapData[coords].IsCityCenter = true;
             AddChild(city);
-            markAllTilesInRadiusAsOwnedByCity(city, city.Center, 3);
+            MarkAllTilesInRadiusAsOwnedByCity(city, 3);
         }
         return city;
     }
@@ -317,38 +317,80 @@ public partial class HexTileMap : Node2D
         return true;
     }
 
-    private void markAllTilesInRadiusAsOwnedByCity(
-        City city,
-        Vector2I center,
-        int maxRadius,
-        int radius = 1
-    )
-    {
-        if (radius > maxRadius)
-        {
-            return;
-        }
-        var hexes = GetSurroundingHexes(center);
-        foreach (var hex in hexes)
-        {
-            if (hex.CityOwner == city || hex.IsCityCenter)
-            {
-                // We already marked this node
-                continue;
-            }
-            var hexOverlay = HexOverlayScene?.Instantiate() as HexOverlay;
-            if (hexOverlay == null)
-            {
-                GD.PrintErr("Hex Overlay scene not fould");
-                GetTree().Quit(1);
-            }
+    //private void markAllTilesInRadiusAsOwnedByCity(
+    //    City city,
+    //    Vector2I center,
+    //    int maxRadius,
+    //    int radius = 1
+    //)
+    //{
+    //    if (radius > maxRadius)
+    //    {
+    //        return;
+    //    }
+    //    var hexes = GetSurroundingHexes(center);
+    //    foreach (var hex in hexes)
+    //    {
+    //        if (hex.CityOwner == city || hex.IsCityCenter)
+    //        {
+    //            // We already marked this node
+    //            continue;
+    //        }
+    //        var hexOverlay = HexOverlayScene?.Instantiate() as HexOverlay;
+    //        if (hexOverlay == null)
+    //        {
+    //            GD.PrintErr("Hex Overlay scene not fould");
+    //            GetTree().Quit(1);
+    //        }
 
-            hexOverlay?.Position = BaseLayer.MapToLocal(hex.Coords);
-            AddChild(hexOverlay);
-            hexOverlay?.UpdateLabel($"{hex.Food}|{hex.Production} ({radius})");
-            hex.CityOwner = city;
-            markAllTilesInRadiusAsOwnedByCity(city, hex.Coords, maxRadius, radius + 1);
+    //        hexOverlay?.Position = BaseLayer.MapToLocal(hex.Coords);
+    //        AddChild(hexOverlay);
+    //        hexOverlay?.UpdateLabel($"{hex.Food}|{hex.Production} ({radius})");
+    //        hex.CityOwner = city;
+    //        markAllTilesInRadiusAsOwnedByCity(city, hex.Coords, maxRadius, radius + 1);
+    //    }
+    //}
+
+    private void MarkAllTilesInRadiusAsOwnedByCity(City city, int radiusInTiles)
+    {
+        Dictionary<int, List<Hex>> radiusToHexMap = [];
+        radiusToHexMap[1] = GetSurroundingHexes(city.Center);
+
+        for (int i = 1; i <= radiusInTiles; i++)
+        {
+            var hexes = radiusToHexMap[i];
+            foreach (var hex in hexes)
+            {
+                if (hex.CityOwner != city)
+                {
+                    CreateHexOverlayAtTile(hex.Coords, radiusInTiles.ToString());
+                    hex.CityOwner = city;
+                    radiusToHexMap.TryGetValue(i + 1, out var hexesInNextRadius);
+                    if (hexesInNextRadius is null)
+                    {
+                        radiusToHexMap[i + 1] = GetSurroundingHexes(hex.Coords);
+                    }
+                    else
+                    {
+                        hexesInNextRadius.AddRange(GetSurroundingHexes(hex.Coords));
+                    }
+                    //hexesInNextRadius ?? hexesInNextRadius.AddRange(GetSurroundingHexes(hex.Coords)) : hexesInNextRadius = GetSurroundingHexes(hex.Coords);
+                }
+            }
         }
+    }
+
+    private void CreateHexOverlayAtTile(Vector2I coords, string text)
+    {
+        var hexOverlay = HexOverlayScene?.Instantiate() as HexOverlay;
+        if (hexOverlay == null)
+        {
+            GD.PrintErr("Hex Overlay scene not fould");
+            GetTree().Quit(1);
+        }
+        hexOverlay?.Position = BaseLayer.MapToLocal(coords);
+        AddChild(hexOverlay);
+        hexOverlay?.UpdateLabel(text);
     }
 
     private void UpdateCivOwnedHexes(Civilization civ)
