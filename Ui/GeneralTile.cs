@@ -13,7 +13,7 @@ public partial class GeneralTile : Control
     {
         turnLabel = GetNode<Label>("%TurnValue");
         endTurnBtn = GetNode<Button>("%EndTurn");
-        endTurnBtn.Pressed += () => OnEndTurnBtnPressed();
+        endTurnBtn.Pressed += OnEndTurnBtnPressed;
     }
 
     private void OnEndTurnBtnPressed()
