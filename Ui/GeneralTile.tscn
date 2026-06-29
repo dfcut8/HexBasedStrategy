@@ -1,0 +1,48 @@
+[gd_scene format=3 uid="uid://cikv26iu2cdef"]
+
+[ext_resource type="Script" uid="uid://di5v0xlrdxsb6" path="res://Ui/GeneralTile.cs" id="1_38nmp"]
+
+[node name="GeneralTile" type="Control" unique_id=1814693820]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = -1854.0
+offset_bottom = -846.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_38nmp")
+
+[node name="Panel" type="Panel" parent="." unique_id=898939842]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -225.0
+offset_right = 225.0
+offset_bottom = 40.0
+grow_horizontal = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Panel" unique_id=1369029457]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="Panel/HBoxContainer" unique_id=1214819057]
+layout_mode = 2
+
+[node name="TurnText" type="Label" parent="Panel/HBoxContainer/HBoxContainer2" unique_id=1941843434]
+layout_mode = 2
+text = "Turn:"
+
+[node name="TurnValue" type="Label" parent="Panel/HBoxContainer/HBoxContainer2" unique_id=1491218504]
+unique_name_in_owner = true
+layout_mode = 2
+text = "0"
+
+[node name="EndTurn" type="Button" parent="Panel/HBoxContainer/HBoxContainer2" unique_id=315470449]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 4
+text = "END TURN"

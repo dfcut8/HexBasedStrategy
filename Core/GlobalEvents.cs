@@ -6,6 +6,7 @@ internal static class GlobalEvents
 {
     public static event Action<HexTileMap>? MapGenerationCompleted;
     public static event Action<Hex?>? HexSelected;
+    public static event Action? EndTurnButtonPressed;
 
     public static void RaiseMapGenerationCompleted(HexTileMap map)
     {
@@ -15,5 +16,10 @@ internal static class GlobalEvents
     public static void RaiseHexSelected(Hex? h)
     {
         HexSelected?.Invoke(h);
+    }
+
+    public static void RaiseEndTurnButtonPressed()
+    {
+        EndTurnButtonPressed?.Invoke();
     }
 }

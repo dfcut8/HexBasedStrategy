@@ -7,6 +7,7 @@ public partial class UiManager : Node2D
 {
     private TerrainTile? terrainTile;
     private CityTile? cityTile;
+    private GeneralTile? generalTile;
 
     public override void _Ready()
     {
@@ -15,6 +16,8 @@ public partial class UiManager : Node2D
 
         cityTile = GetNode<CityTile>("%CityTile");
         cityTile.Visible = false;
+
+        generalTile = GetNode<GeneralTile>("%GeneralTile");
 
         GlobalEvents.HexSelected += OnHexSelected;
     }
@@ -25,6 +28,11 @@ public partial class UiManager : Node2D
     {
         terrainTile?.Visible = false;
         cityTile?.Visible = false;
+    }
+
+    public void UpdateCurrentTurn(int currentTurn)
+    {
+        generalTile?.Update(currentTurn);
     }
 
     private void OnHexSelected(Hex? h)

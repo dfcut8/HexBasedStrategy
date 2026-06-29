@@ -3,6 +3,7 @@ using System.Linq;
 using Godot;
 using HexBasedStrategy.Data;
 using HexBasedStrategy.Objects;
+using HexBasedStrategy.Ui;
 
 namespace HexBasedStrategy.Core;
 
@@ -13,13 +14,25 @@ public partial class Level : Node
 
     public List<Civilization> Civilizations { get; set; } = [];
     public Dictionary<Vector2I, City> coordsToCities = [];
+    public int currentTurn = 1;
 
+    private UiManager? uiManager;
     private HexTileMap? hexTileMap;
 
     public override void _Ready()
     {
         hexTileMap = GetNode<HexTileMap>("%HexTileMap");
         CreateCivilizations(hexTileMap);
+
+        uiManager = GetNode<UiManager>("%UiManager");
+        uiManager.UpdateCurrentTurn(currentTurn);
+
+        GlobalEvents.EndTurnButtonPressed += OnEndTurnButtonPressed;
+    }
+
+    private void OnEndTurnButtonPressed()
+    {
+        uiManager?.UpdateCurrentTurn(++currentTurn);
     }
 
     private void CreateCivilizations(HexTileMap hexTileMap)
