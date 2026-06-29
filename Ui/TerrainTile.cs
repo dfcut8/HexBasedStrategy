@@ -28,10 +28,12 @@ public partial class TerrainTile : Control
         if (h is null)
         {
             Visible = false;
+            ProcessMode = ProcessModeEnum.Disabled;
             return;
         }
 
         Visible = true;
+        ProcessMode = ProcessModeEnum.Always;
         terrainImage?.Texture = terrainTypeToTexture?[h.TerrainType].Texture;
         terrainLabel?.Text = h.TerrainType.ToString();
         foodLabel?.Text = h.Food.ToString();

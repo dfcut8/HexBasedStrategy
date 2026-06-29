@@ -10,8 +10,10 @@ public partial class City : Node2D
     public required Civilization OwnerCiv { get; set; }
     public HexTileMap? Map { private get; set; }
     public Vector2I Center { get; set; } = Vector2I.Zero;
-    public List<Hex> Territory { get; private set; } = [];
-    public List<Hex> TerritoryPool { get; private set; } = [];
+    public List<Hex> TilesOwned { get; private set; } = [];
+    public int Population { get; set; }
+    public int Production { get; set; }
+    public int Food { get; set; }
 
     private Label? label;
     private Sprite2D? sprite;
@@ -25,4 +27,14 @@ public partial class City : Node2D
     }
 
     public override void _Process(double delta) { }
+
+    public void UpdateCityInfo()
+    {
+        foreach (var tile in TilesOwned)
+        {
+            Production += tile.Production;
+            Food += tile.Food;
+            Population++;
+        }
+    }
 }

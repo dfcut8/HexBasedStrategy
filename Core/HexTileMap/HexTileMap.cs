@@ -246,6 +246,7 @@ public partial class HexTileMap : Node2D
             mapData[coords].CityOwner = city;
             AddChild(city);
             MarkAllTilesInRadiusAsOwnedByCity(city, 3);
+            city.UpdateCityInfo();
         }
         return city;
     }
@@ -331,6 +332,7 @@ public partial class HexTileMap : Node2D
                 {
                     CreateHexOverlayAtTile(hex.Coords, i.ToString(), city.OwnerCiv);
                     hex.CityOwner = city;
+                    city.TilesOwned.Add(hex);
                     var hexesInNextRadius = radiusToHexMap.GetValueOrDefault(i + 1);
                     if (hexesInNextRadius is null)
                     {
@@ -361,7 +363,7 @@ public partial class HexTileMap : Node2D
     {
         foreach (var city in civ.Cities)
         {
-            foreach (var h in city.Territory)
+            foreach (var h in city.TilesOwned)
             {
                 // TODO
                 GD.Print("Painting");

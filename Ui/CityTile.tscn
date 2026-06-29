@@ -1,5 +1,7 @@
 [gd_scene format=3 uid="uid://cydg5dhufkf0m"]
 
+[ext_resource type="Script" uid="uid://ctyy5bq33ri4n" path="res://Ui/CityTile.cs" id="1_qsas6"]
+
 [sub_resource type="CompressedTexture2D" id="CompressedTexture2D_b2dtf"]
 load_path = "res://.godot/imported/City.jpg-59554236ffd0e301f23e9f2605047016.ctex"
 
@@ -10,6 +12,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+script = ExtResource("1_qsas6")
 
 [node name="Panel" type="Panel" parent="." unique_id=1717007148]
 custom_minimum_size = Vector2(450, 0)
@@ -38,18 +41,20 @@ layout_mode = 2
 [node name="VBoxContainer" type="VBoxContainer" parent="Panel/VBoxContainer/MarginContainer" unique_id=1263548553]
 layout_mode = 2
 
-[node name="CityName" type="HBoxContainer" parent="Panel/VBoxContainer/MarginContainer/VBoxContainer" unique_id=1557393860]
+[node name="Name" type="HBoxContainer" parent="Panel/VBoxContainer/MarginContainer/VBoxContainer" unique_id=1557393860]
+unique_name_in_owner = true
 layout_mode = 2
 
-[node name="Label" type="Label" parent="Panel/VBoxContainer/MarginContainer/VBoxContainer/CityName" unique_id=1396656530]
+[node name="Label" type="Label" parent="Panel/VBoxContainer/MarginContainer/VBoxContainer/Name" unique_id=1396656530]
 layout_mode = 2
 text = "Name:"
 
-[node name="Value" type="Label" parent="Panel/VBoxContainer/MarginContainer/VBoxContainer/CityName" unique_id=344759467]
+[node name="Value" type="Label" parent="Panel/VBoxContainer/MarginContainer/VBoxContainer/Name" unique_id=344759467]
 layout_mode = 2
 text = "XXX"
 
 [node name="Population" type="HBoxContainer" parent="Panel/VBoxContainer/MarginContainer/VBoxContainer" unique_id=1348481711]
+unique_name_in_owner = true
 layout_mode = 2
 
 [node name="Label" type="Label" parent="Panel/VBoxContainer/MarginContainer/VBoxContainer/Population" unique_id=420896058]
@@ -61,6 +66,7 @@ layout_mode = 2
 text = "XXX"
 
 [node name="Production" type="HBoxContainer" parent="Panel/VBoxContainer/MarginContainer/VBoxContainer" unique_id=1766589809]
+unique_name_in_owner = true
 layout_mode = 2
 
 [node name="Label" type="Label" parent="Panel/VBoxContainer/MarginContainer/VBoxContainer/Production" unique_id=1145269077]
@@ -72,6 +78,7 @@ layout_mode = 2
 text = "XXX"
 
 [node name="Food" type="HBoxContainer" parent="Panel/VBoxContainer/MarginContainer/VBoxContainer" unique_id=1221240597]
+unique_name_in_owner = true
 layout_mode = 2
 
 [node name="Label" type="Label" parent="Panel/VBoxContainer/MarginContainer/VBoxContainer/Food" unique_id=74567607]
