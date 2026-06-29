@@ -33,8 +33,8 @@ public partial class CityTile : Control
         Visible = true;
         ProcessMode = ProcessModeEnum.Always;
         name?.Text = city.CityName;
-        production?.Text = city.Food.ToString();
-        population?.Text = city.Production.ToString();
+        production?.Text = city.Production.ToString();
+        population?.Text = city.Population.ToString();
         food?.Text = city.Food.ToString();
     }
 }

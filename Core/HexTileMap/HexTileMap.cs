@@ -245,7 +245,7 @@ public partial class HexTileMap : Node2D
             mapData[coords].IsCityCenter = true;
             mapData[coords].CityOwner = city;
             AddChild(city);
-            MarkAllTilesInRadiusAsOwnedByCity(city, 3);
+            MarkAllTilesInRadiusAsOwnedByCity(city, 1);
             city.UpdateCityInfo();
         }
         return city;
