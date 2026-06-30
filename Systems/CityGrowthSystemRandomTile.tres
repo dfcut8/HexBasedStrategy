@@ -1,7 +1,0 @@
-[gd_resource type="Resource" script_class="CityGrowthResource" format=3 uid="uid://c27ykigqd8ukf"]
-
-[ext_resource type="Script" uid="uid://crvwooc7iqbrb" path="res://Systems/CityGrowthResource.cs" id="1_nrv50"]
-
-[resource]
-script = ExtResource("1_nrv50")
-metadata/_custom_type_script = "uid://crvwooc7iqbrb"

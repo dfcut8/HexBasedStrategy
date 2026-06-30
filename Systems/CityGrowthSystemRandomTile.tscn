@@ -1,6 +1,0 @@
-[gd_scene format=3 uid="uid://dk6077bch36hc"]
-
-[ext_resource type="Script" uid="uid://hk465qe81fjy" path="res://Systems/CityGrowthSystemRandomTile.cs" id="1_ghoyo"]
-
-[node name="CityGrowthSystemRandomTile" type="Node" unique_id=1219062630]
-script = ExtResource("1_ghoyo")

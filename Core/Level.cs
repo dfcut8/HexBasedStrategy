@@ -4,6 +4,7 @@ using Godot;
 using HexBasedStrategy.Data;
 using HexBasedStrategy.Objects;
 using HexBasedStrategy.Systems;
+using HexBasedStrategy.Systems.CityGrowth;
 using HexBasedStrategy.Ui;
 
 namespace HexBasedStrategy.Core;
@@ -14,7 +15,8 @@ public partial class Level : Node
     private CivilizationData[] CivilizationDataList { get; set; } = [];
 
     [Export]
-    private CityGrowthResource? cityGrowthResource;
+    private CityGrowthSystemType cityGrowthType;
+
     private ICityGrowthSystem? cityGrowthSystem;
     public List<Civilization> Civilizations { get; set; } = [];
     public Dictionary<Vector2I, City> coordsToCities = [];
@@ -30,6 +32,8 @@ public partial class Level : Node
 
         uiManager = GetNode<UiManager>("%UiManager");
         uiManager.UpdateCurrentTurn(currentTurn);
+
+        cityGrowthSystem = ICityGrowthSystem.GetInstance(cityGrowthType);
 
         GlobalEvents.EndTurnButtonPressed += OnEndTurnButtonPressed;
     }
