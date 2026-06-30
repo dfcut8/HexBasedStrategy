@@ -6,7 +6,7 @@
       "command": "dotnet",
       "type": "process",
       "args": [
-        "build",
+        "build"
       ],
       "problemMatcher": "$msCompile",
       "presentation": {
@@ -16,6 +16,10 @@
         "panel": "shared",
         "showReuseMessage": false,
         "clear": false
+      },
+      "group": {
+        "kind": "build",
+        "isDefault": true
       }
     },
     {
@@ -28,7 +32,7 @@
         }
       },
       "args": [
-        "build",
+        "build"
       ],
       "problemMatcher": "$msCompile",
       "presentation": {
@@ -55,7 +59,7 @@
         "panel": "shared",
         "showReuseMessage": false,
         "clear": true
-      },
+      }
     },
     {
       "label": "build-solutions",
@@ -74,5 +78,12 @@
         "clear": false
       }
     },
+    {
+      "type": "dotnet",
+      "task": "build",
+      "group": "build",
+      "problemMatcher": [],
+      "label": "dotnet: build"
+    }
   ]
 }
