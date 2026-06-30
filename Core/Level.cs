@@ -3,6 +3,7 @@ using System.Linq;
 using Godot;
 using HexBasedStrategy.Data;
 using HexBasedStrategy.Objects;
+using HexBasedStrategy.Systems;
 using HexBasedStrategy.Ui;
 
 namespace HexBasedStrategy.Core;
@@ -12,6 +13,9 @@ public partial class Level : Node
     [Export]
     private CivilizationData[] CivilizationDataList { get; set; } = [];
 
+    [Export]
+    private CityGrowthResource? cityGrowthResource;
+    private ICityGrowthSystem? cityGrowthSystem;
     public List<Civilization> Civilizations { get; set; } = [];
     public Dictionary<Vector2I, City> coordsToCities = [];
     public int currentTurn = 1;
