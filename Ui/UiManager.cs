@@ -30,7 +30,7 @@ public partial class UiManager : Node2D
         cityTile?.Visible = false;
     }
 
-    public void UpdateCurrentTurn(int currentTurn)
+    public void UpdateUi(int currentTurn)
     {
         generalTile?.Update(currentTurn);
     }

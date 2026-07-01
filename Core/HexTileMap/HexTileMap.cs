@@ -297,7 +297,7 @@ public partial class HexTileMap : Node2D
 
     private bool IsLocationValid(Vector2I coords, List<Civilization> civilizations)
     {
-        if ((coords.X < 3 || coords.X > Width - 3) || (coords.Y < 3 && coords.Y > Height - 3))
+        if (coords.X < 3 || coords.X > Width - 3 || (coords.Y < 3 && coords.Y > Height - 3))
         {
             return false;
         }
@@ -316,6 +316,27 @@ public partial class HexTileMap : Node2D
             }
         }
         return true;
+    }
+
+    private void UpdateTilesAvailableForOwnership(City city)
+    {
+        var tilesOwned = city.TilesOwned;
+        var tilesAvailableForOwnership = new List<Hex>();
+        foreach (var tile in tilesOwned)
+        {
+            tilesAvailableForOwnership.AddRange(
+                GetSurroundingHexes(tile.Coords)
+                    .Where(t =>
+                        t.CityOwner != city
+                        && (
+                            t.TerrainType == TerrainType.Plains
+                            || t.TerrainType == TerrainType.Desert
+                            || t.TerrainType == TerrainType.Forest
+                        )
+                    )
+            );
+        }
+        city.TilesAvailableForOwnership.AddRange(tilesAvailableForOwnership);
     }
 
     private void MarkAllTilesInRadiusAsOwnedByCity(City city, int radiusInTiles)

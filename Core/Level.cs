@@ -18,7 +18,8 @@ public partial class Level : Node
     private CityGrowthSystemType cityGrowthType;
 
     private ICityGrowthSystem? cityGrowthSystem;
-    public List<Civilization> Civilizations { get; set; } = [];
+    public static List<Civilization> Civilizations { get; set; } = [];
+    public static List<City> Cities { get; set; } = [];
     public Dictionary<Vector2I, City> coordsToCities = [];
     public int currentTurn = 1;
 
@@ -31,7 +32,7 @@ public partial class Level : Node
         CreateCivilizations(hexTileMap);
 
         uiManager = GetNode<UiManager>("%UiManager");
-        uiManager.UpdateCurrentTurn(currentTurn);
+        uiManager.UpdateUi(currentTurn);
 
         cityGrowthSystem = ICityGrowthSystem.GetInstance(cityGrowthType);
 
@@ -40,7 +41,8 @@ public partial class Level : Node
 
     private void OnEndTurnButtonPressed()
     {
-        uiManager?.UpdateCurrentTurn(++currentTurn);
+        uiManager?.UpdateUi(++currentTurn);
+        cityGrowthSystem?.Process(Cities);
     }
 
     private void CreateCivilizations(HexTileMap hexTileMap)
