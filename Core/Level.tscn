@@ -12,18 +12,10 @@
 [ext_resource type="PackedScene" uid="uid://cydg5dhufkf0m" path="res://Ui/CityTile.tscn" id="10_o1d26"]
 [ext_resource type="PackedScene" uid="uid://cikv26iu2cdef" path="res://Ui/GeneralTile.tscn" id="11_b8wnr"]
 
-[sub_resource type="CSharpScript" id="CSharpScript_b8wnr"]
-script/source = "using Godot;
-using System;
-
-public partial class NewScript : Resource
-{
-}
-"
-
 [node name="Level" type="Node" unique_id=692662400]
 script = ExtResource("1_m3clv")
 CivilizationDataList = [ExtResource("2_f0br3"), ExtResource("3_o1d26"), ExtResource("4_b8wnr")]
+cityGrowthType = 1
 
 [node name="Camera" type="Camera2D" parent="." unique_id=332791322]
 position = Vector2(1500, 1500)

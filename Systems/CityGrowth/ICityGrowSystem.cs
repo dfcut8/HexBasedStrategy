@@ -9,6 +9,7 @@ public interface ICityGrowthSystem
         return type switch
         {
             CityGrowthSystemType.RandomTile => new CityGrowthSystemRandomTile(),
+            CityGrowthSystemType.Generational => new CityGrowthSystemGenerational(),
             _ => null,
         };
     }

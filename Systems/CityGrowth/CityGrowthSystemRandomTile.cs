@@ -3,7 +3,7 @@ using Godot;
 
 namespace HexBasedStrategy.Systems.CityGrowth;
 
-public partial class CityGrowthSystemRandomTile : Node, ICityGrowthSystem
+public partial class CityGrowthSystemRandomTile : ICityGrowthSystem
 {
     public CityGrowthSystemRandomTile()
     {
