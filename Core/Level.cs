@@ -14,7 +14,7 @@ public partial class Level : Node
     [Export]
     private CivilizationData[] CivilizationDataList { get; set; } = [];
 
-    [Export]
+    // [Export]
     private CityGrowthSystemType cityGrowthType;
 
     private ICityGrowthSystem? cityGrowthSystem;
