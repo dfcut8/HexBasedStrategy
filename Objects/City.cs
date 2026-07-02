@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using Godot;
 using HexBasedStrategy.Core;
 
@@ -8,7 +9,7 @@ public partial class City : Node2D
 {
     public required string CityName { get; set; }
     public required Civilization OwnerCiv { get; set; }
-    public HexTileMap? Map { private get; set; }
+    public required HexTileMap WorldMap { private get; set; }
     public Vector2I Center { get; set; } = Vector2I.Zero;
     public List<Hex> TilesOwned { get; set; } = [];
     public List<Hex> TilesAvailableForOwnership { get; set; } = [];
@@ -52,7 +53,9 @@ public partial class City : Node2D
         foreach (var tile in tilesOwned)
         {
             tilesAvailableForOwnership.AddRange(
-                Map.GetSurroundingHexes(tile.Coords)
+                WorldMap
+                    .GetSurroundingTiles(tile.Coords)
+                    .ToList()
                     .Where(t =>
                         t.CityOwner != this
                         && (

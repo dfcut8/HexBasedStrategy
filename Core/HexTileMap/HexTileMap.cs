@@ -239,7 +239,7 @@ public partial class HexTileMap : Node2D
             city.Center = coords;
             city.CityName = name;
             city.OwnerCiv = civ;
-            city.Map = this;
+            city.WorldMap = this;
             mapData[coords].IsCityCenter = true;
             mapData[coords].CityOwner = city;
             AddChild(city);
@@ -319,7 +319,7 @@ public partial class HexTileMap : Node2D
     private void MarkAllTilesInRadiusAsOwnedByCity(City city, int radiusInTiles)
     {
         Dictionary<int, List<Hex>> radiusToHexMap = [];
-        radiusToHexMap[1] = GetSurroundingHexes(city.Center);
+        radiusToHexMap[1] = [.. GetSurroundingTiles(city.Center)];
 
         for (int i = 1; i <= radiusInTiles; i++)
         {
@@ -337,7 +337,7 @@ public partial class HexTileMap : Node2D
                         hexesInNextRadius = [];
                         radiusToHexMap[i + 1] = hexesInNextRadius;
                     }
-                    hexesInNextRadius.AddRange(GetSurroundingHexes(hex.Coords));
+                    hexesInNextRadius.AddRange(GetSurroundingTiles(hex.Coords));
                 }
             }
         }
@@ -369,13 +369,12 @@ public partial class HexTileMap : Node2D
         }
     }
 
-    private List<Hex> GetSurroundingHexes(Vector2I center)
+    public IReadOnlyList<Hex> GetSurroundingTiles(Vector2I center)
     {
         var result = new List<Hex>();
         foreach (var coords in BaseLayer.GetSurroundingCells(center))
         {
             var h = mapData.GetValueOrDefault(coords);
-            //if (h is not null && h.CityOwner is null)
             if (h is not null)
             {
                 result.Add(h);
