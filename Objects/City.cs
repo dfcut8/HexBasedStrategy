@@ -30,6 +30,11 @@ public partial class City : Node2D
 
     public override void _Process(double delta) { }
 
+    public override string ToString()
+    {
+        return $"[City] CityName={CityName}, OwnerCiv={OwnerCiv}, Center={Center}, TilesOwned={TilesOwned.Count}, TilesAvailableForOwnership={TilesAvailableForOwnership.Count}";
+    }
+
     public void UpdateCityInfo()
     {
         foreach (var tile in TilesOwned)
@@ -58,6 +63,7 @@ public partial class City : Node2D
                     .ToList()
                     .Where(t =>
                         t.CityOwner != this
+                        && !tilesAvailableForOwnership.Contains(t)
                         && (
                             t.TerrainType == TerrainType.Plains
                             || t.TerrainType == TerrainType.Desert
@@ -66,6 +72,6 @@ public partial class City : Node2D
                     )
             );
         }
-        TilesAvailableForOwnership.AddRange(tilesAvailableForOwnership);
+        TilesAvailableForOwnership = [.. tilesAvailableForOwnership];
     }
 }

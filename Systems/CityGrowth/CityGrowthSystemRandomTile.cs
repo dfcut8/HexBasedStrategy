@@ -17,9 +17,16 @@ public partial class CityGrowthSystemRandomTile : ICityGrowthSystem
         foreach (var c in cities)
         {
             var availableTiles = c.TilesAvailableForOwnership;
+            if (availableTiles.Count <= 0)
+            {
+                GD.PrintErr("No way to expand city");
+                continue;
+            }
             var selected = availableTiles[Random.Shared.Next(availableTiles.Count - 1)];
+            selected.CityOwner = c;
             c.TilesOwned.Add(selected);
             c.UpdateState();
+            GD.Print($"Selected hex for expansion: {selected}");
         }
     }
 }

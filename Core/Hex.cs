@@ -1,5 +1,4 @@
 using Godot;
-
 using HexBasedStrategy.Objects;
 
 namespace HexBasedStrategy.Core;
@@ -15,6 +14,6 @@ public class Hex(Vector2I coords)
 
     public override string ToString()
     {
-        return $"Hex: TerrainType={TerrainType}, Coords={Coords}, Food={Food}, Production={Production}";
+        return $"[Hex] TerrainType={TerrainType}, Coords={Coords}, Food={Food}, Production={Production}, CityOwner={CityOwner}";
     }
 }
