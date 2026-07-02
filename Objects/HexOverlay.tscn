@@ -4,7 +4,7 @@
 [ext_resource type="Texture2D" uid="uid://hvsw6wtquesp" path="res://Assets/Textures/BaseTiles.png" id="2_wy47j"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_5i805"]
-font_size = 48
+font_size = 32
 
 [node name="HexOverlay" type="Node2D" unique_id=2002769366]
 script = ExtResource("1_cfrrg")
@@ -17,9 +17,9 @@ region_enabled = true
 region_rect = Rect2(0, 384, 128, 128)
 
 [node name="Panel" type="Panel" parent="." unique_id=1914311798]
-offset_left = -31.0
+offset_left = -45.0
 offset_top = -31.0
-offset_right = 29.0
+offset_right = 46.0
 offset_bottom = 29.0
 mouse_filter = 2
 
@@ -34,7 +34,7 @@ offset_top = -14.0
 offset_bottom = 14.0
 grow_horizontal = 2
 grow_vertical = 2
-text = "1"
+text = "1:1"
 label_settings = SubResource("LabelSettings_5i805")
 horizontal_alignment = 1
 vertical_alignment = 1

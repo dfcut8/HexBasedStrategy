@@ -6,6 +6,7 @@ namespace HexBasedStrategy.Ui;
 
 public partial class TerrainTile : Control
 {
+    public Hex? Hex { get; set; }
     private TextureRect? terrainImage;
     private Label? terrainLabel;
     private Label? foodLabel;
@@ -23,20 +24,19 @@ public partial class TerrainTile : Control
 
     public override void _Process(double delta) { }
 
-    public void Update(Hex? h)
+    public void Refresh()
     {
-        if (h is null)
+        if (Hex is null)
         {
             Visible = false;
             ProcessMode = ProcessModeEnum.Disabled;
             return;
         }
-
         Visible = true;
         ProcessMode = ProcessModeEnum.Always;
-        terrainImage?.Texture = terrainTypeToTexture?[h.TerrainType].Texture;
-        terrainLabel?.Text = h.TerrainType.ToString();
-        foodLabel?.Text = h.Food.ToString();
-        productionLabel?.Text = h.Production.ToString();
+        terrainImage?.Texture = terrainTypeToTexture?[Hex.TerrainType].Texture;
+        terrainLabel?.Text = Hex.TerrainType.ToString();
+        foodLabel?.Text = Hex.Food.ToString();
+        productionLabel?.Text = Hex.Production.ToString();
     }
 }

@@ -6,6 +6,7 @@ namespace HexBasedStrategy.Ui;
 
 public partial class CityTile : Control
 {
+    public City? City { get; set; }
     private Label? name;
     private Label? population;
     private Label? production;
@@ -21,9 +22,9 @@ public partial class CityTile : Control
 
     public override void _Process(double delta) { }
 
-    public void Update(City? city)
+    public void Refresh()
     {
-        if (city is null)
+        if (City is null)
         {
             Visible = false;
             ProcessMode = ProcessModeEnum.Disabled;
@@ -32,9 +33,9 @@ public partial class CityTile : Control
 
         Visible = true;
         ProcessMode = ProcessModeEnum.Always;
-        name?.Text = city.CityName;
-        production?.Text = city.Production.ToString();
-        population?.Text = city.Population.ToString();
-        food?.Text = city.Food.ToString();
+        name?.Text = City.CityName;
+        production?.Text = City.Production.ToString();
+        population?.Text = City.Population.ToString();
+        food?.Text = City.Food.ToString();
     }
 }

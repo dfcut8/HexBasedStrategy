@@ -32,7 +32,9 @@ public partial class UiManager : Node2D
 
     public void UpdateUi(int currentTurn)
     {
-        generalTile?.Update(currentTurn);
+        generalTile?.Refresh(currentTurn);
+        cityTile?.Refresh();
+        terrainTile?.Refresh();
     }
 
     private void OnHexSelected(Hex? h)
@@ -42,16 +44,19 @@ public partial class UiManager : Node2D
             DisableAllTiles();
             return;
         }
-
         if (h.IsCityCenter)
         {
             terrainTile?.Visible = false;
-            cityTile?.Update(h.CityOwner);
+            terrainTile?.Hex = null;
+            cityTile?.City = h.CityOwner;
+            cityTile?.Refresh();
         }
         else
         {
             cityTile?.Visible = false;
-            terrainTile?.Update(h);
+            cityTile?.City = null;
+            terrainTile?.Hex = h;
+            terrainTile?.Refresh();
         }
     }
 }

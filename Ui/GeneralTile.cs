@@ -21,7 +21,7 @@ public partial class GeneralTile : Control
         GlobalEvents.RaiseEndTurnButtonPressed();
     }
 
-    public void Update(int currentTurn)
+    public void Refresh(int currentTurn)
     {
         turnLabel?.Text = currentTurn.ToString();
     }

@@ -41,7 +41,7 @@ public partial class City : Node2D
         {
             Production += tile.Production;
             Food += tile.Food;
-            Population++;
+            Population = TilesOwned.Count;
         }
         UpdateTilesAvailableForOwnership();
     }

@@ -37,9 +37,9 @@ public partial class Level : Node
 
     private void OnEndTurnButtonPressed()
     {
-        uiManager?.UpdateUi(++currentTurn);
         cityGrowthSystem?.Process(State.Cities);
         hexTileMap?.UpdateCities(State.Cities);
+        uiManager?.UpdateUi(++currentTurn);
     }
 
     private void CreateCivilizations(HexTileMap hexTileMap)
