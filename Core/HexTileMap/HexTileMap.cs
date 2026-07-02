@@ -225,8 +225,6 @@ public partial class HexTileMap : Node2D
 
     private City? CreateCity(Civilization civ, Vector2I coords, string name)
     {
-        // TODO: Add recursion to mark all surr hexes owned by the city.
-
         if (CityScene is null)
         {
             GD.PrintErr("City scene is not provided!");
@@ -318,27 +316,6 @@ public partial class HexTileMap : Node2D
         return true;
     }
 
-    private void UpdateTilesAvailableForOwnership(City city)
-    {
-        var tilesOwned = city.TilesOwned;
-        var tilesAvailableForOwnership = new List<Hex>();
-        foreach (var tile in tilesOwned)
-        {
-            tilesAvailableForOwnership.AddRange(
-                GetSurroundingHexes(tile.Coords)
-                    .Where(t =>
-                        t.CityOwner != city
-                        && (
-                            t.TerrainType == TerrainType.Plains
-                            || t.TerrainType == TerrainType.Desert
-                            || t.TerrainType == TerrainType.Forest
-                        )
-                    )
-            );
-        }
-        city.TilesAvailableForOwnership.AddRange(tilesAvailableForOwnership);
-    }
-
     private void MarkAllTilesInRadiusAsOwnedByCity(City city, int radiusInTiles)
     {
         Dictionary<int, List<Hex>> radiusToHexMap = [];
@@ -371,7 +348,7 @@ public partial class HexTileMap : Node2D
         var hexOverlay = HexOverlayScene?.Instantiate() as HexOverlay;
         if (hexOverlay == null)
         {
-            GD.PrintErr("Hex Overlay scene not fould");
+            GD.PrintErr("Hex Overlay scene not found");
             GetTree().Quit(1);
         }
         hexOverlay?.Position = BaseLayer.MapToLocal(coords);

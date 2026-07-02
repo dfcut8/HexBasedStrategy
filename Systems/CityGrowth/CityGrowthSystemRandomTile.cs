@@ -14,10 +14,12 @@ public partial class CityGrowthSystemRandomTile : ICityGrowthSystem
 
     public void Process(List<City> cities)
     {
-        // TODO: Get list of all cities and add a new tile
         foreach (var c in cities)
         {
-            var x = c.TilesAvailableForOwnership;
+            var availableTiles = c.TilesAvailableForOwnership;
+            var selected = availableTiles[Random.Shared.Next(availableTiles.Count)];
+            c.TilesOwned.Add(selected);
+            c.Update();
         }
     }
 }

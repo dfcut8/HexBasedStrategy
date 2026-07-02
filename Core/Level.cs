@@ -1,9 +1,7 @@
 using System.Collections.Generic;
-using System.Linq;
 using Godot;
 using HexBasedStrategy.Data;
 using HexBasedStrategy.Objects;
-using HexBasedStrategy.Systems;
 using HexBasedStrategy.Systems.CityGrowth;
 using HexBasedStrategy.Ui;
 

@@ -38,4 +38,31 @@ public partial class City : Node2D
             Population++;
         }
     }
+
+    public void Update()
+    {
+        // TODO: Need to recalculate available pool
+        UpdateTilesAvailableForOwnership();
+    }
+
+    private void UpdateTilesAvailableForOwnership()
+    {
+        var tilesOwned = TilesOwned;
+        var tilesAvailableForOwnership = new List<Hex>();
+        foreach (var tile in tilesOwned)
+        {
+            tilesAvailableForOwnership.AddRange(
+                Map.GetSurroundingHexes(tile.Coords)
+                    .Where(t =>
+                        t.CityOwner != this
+                        && (
+                            t.TerrainType == TerrainType.Plains
+                            || t.TerrainType == TerrainType.Desert
+                            || t.TerrainType == TerrainType.Forest
+                        )
+                    )
+            );
+        }
+        TilesAvailableForOwnership.AddRange(tilesAvailableForOwnership);
+    }
 }
