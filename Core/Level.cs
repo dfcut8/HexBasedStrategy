@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using Godot;
+using HexBasedStrategy.Core.States;
 using HexBasedStrategy.Data;
 using HexBasedStrategy.Objects;
 using HexBasedStrategy.Systems.CityGrowth;
@@ -14,13 +15,10 @@ public partial class Level : Node
 
     [Export]
     private CityGrowthSystemType cityGrowthType;
-
-    private ICityGrowthSystem? cityGrowthSystem;
-    public static List<Civilization> Civilizations { get; set; } = [];
-    public static List<City> Cities { get; set; } = [];
     public Dictionary<Vector2I, City> coordsToCities = [];
     public int currentTurn = 1;
-
+    private LevelState State { get; } = new();
+    private ICityGrowthSystem? cityGrowthSystem;
     private UiManager? uiManager;
     private HexTileMap? hexTileMap;
 
@@ -40,7 +38,8 @@ public partial class Level : Node
     private void OnEndTurnButtonPressed()
     {
         uiManager?.UpdateUi(++currentTurn);
-        cityGrowthSystem?.Process(Cities);
+        cityGrowthSystem?.Process(State.Cities);
+        hexTileMap?.UpdateCities(State.Cities);
     }
 
     private void CreateCivilizations(HexTileMap hexTileMap)
@@ -53,8 +52,8 @@ public partial class Level : Node
                 Name = cd.Name,
                 CityNames = [.. cd.CityNames],
             };
-            Civilizations.Add(civ);
+            State.Civilizations.Add(civ);
         }
-        hexTileMap.GenerateCivStartingLocations(Civilizations);
+        State.Cities = hexTileMap.GenerateCivStartingLocations(State.Civilizations);
     }
 }

@@ -245,12 +245,14 @@ public partial class HexTileMap : Node2D
             AddChild(city);
             MarkAllTilesInRadiusAsOwnedByCity(city, 1);
             city.UpdateCityInfo();
+            city.UpdateState();
         }
         return city;
     }
 
-    public void GenerateCivStartingLocations(List<Civilization> civilizations)
+    public List<City> GenerateCivStartingLocations(List<Civilization> civilizations)
     {
+        var result = new List<City>();
         var plains = mapData
             .Where(kv => kv.Value.TerrainType == TerrainType.Plains)
             .Select(kv => kv.Value)
@@ -285,12 +287,14 @@ public partial class HexTileMap : Node2D
             if (city is not null)
             {
                 civ.Cities.Add(city);
+                result.Add(city);
             }
             else
             {
                 GD.PrintErr("Wasn't able to create city at location.");
             }
         }
+        return result;
     }
 
     private bool IsLocationValid(Vector2I coords, List<Civilization> civilizations)
@@ -328,7 +332,7 @@ public partial class HexTileMap : Node2D
             {
                 if (hex.CityOwner != city)
                 {
-                    CreateHexOverlayAtTile(hex.Coords, i.ToString(), city.OwnerCiv);
+                    CreateHexOverlayAtTile(hex.Coords, i.ToString(), city.OwnerCiv.Color);
                     hex.CityOwner = city;
                     city.TilesOwned.Add(hex);
                     var hexesInNextRadius = radiusToHexMap.GetValueOrDefault(i + 1);
@@ -343,7 +347,7 @@ public partial class HexTileMap : Node2D
         }
     }
 
-    private void CreateHexOverlayAtTile(Vector2I coords, string text, Civilization owner)
+    private void CreateHexOverlayAtTile(Vector2I coords, string text, Color color)
     {
         var hexOverlay = HexOverlayScene?.Instantiate() as HexOverlay;
         if (hexOverlay == null)
@@ -354,7 +358,7 @@ public partial class HexTileMap : Node2D
         hexOverlay?.Position = BaseLayer.MapToLocal(coords);
         AddChild(hexOverlay);
         hexOverlay?.UpdateLabel(text);
-        hexOverlay?.UpdateColor(owner.Color);
+        hexOverlay?.UpdateColor(color);
     }
 
     private void UpdateCivOwnedHexes(Civilization civ)
@@ -475,5 +479,21 @@ public partial class HexTileMap : Node2D
             > 0.50f => true,
             _ => false,
         };
+    }
+
+    public void UpdateCities(List<City> cities)
+    {
+        GD.Print("Updating cities on a map.");
+        foreach (var city in cities)
+        {
+            foreach (var tile in city.TilesOwned)
+            {
+                CreateHexOverlayAtTile(
+                    tile.Coords,
+                    $"{tile.Food}|{tile.Production}",
+                    city.OwnerCiv.Color
+                );
+            }
+        }
     }
 }

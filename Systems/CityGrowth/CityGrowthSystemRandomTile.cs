@@ -17,9 +17,9 @@ public partial class CityGrowthSystemRandomTile : ICityGrowthSystem
         foreach (var c in cities)
         {
             var availableTiles = c.TilesAvailableForOwnership;
-            var selected = availableTiles[Random.Shared.Next(availableTiles.Count)];
+            var selected = availableTiles[Random.Shared.Next(availableTiles.Count - 1)];
             c.TilesOwned.Add(selected);
-            c.Update();
+            c.UpdateState();
         }
     }
 }

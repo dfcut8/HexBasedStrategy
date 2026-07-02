@@ -40,7 +40,7 @@ public partial class City : Node2D
         }
     }
 
-    public void Update()
+    public void UpdateState()
     {
         // TODO: Need to recalculate available pool
         UpdateTilesAvailableForOwnership();

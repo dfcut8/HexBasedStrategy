@@ -15,7 +15,6 @@
 [node name="Level" type="Node" unique_id=692662400]
 script = ExtResource("1_m3clv")
 CivilizationDataList = [ExtResource("2_f0br3"), ExtResource("3_o1d26"), ExtResource("4_b8wnr")]
-cityGrowthType = 1
 
 [node name="Camera" type="Camera2D" parent="." unique_id=332791322]
 position = Vector2(1500, 1500)
