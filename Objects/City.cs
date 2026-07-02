@@ -35,7 +35,7 @@ public partial class City : Node2D
         return $"[City] CityName={CityName}, OwnerCiv={OwnerCiv}, Center={Center}, TilesOwned={TilesOwned.Count}, TilesAvailableForOwnership={TilesAvailableForOwnership.Count}";
     }
 
-    public void UpdateCityInfo()
+    public void UpdateState()
     {
         foreach (var tile in TilesOwned)
         {
@@ -43,11 +43,6 @@ public partial class City : Node2D
             Food += tile.Food;
             Population++;
         }
-    }
-
-    public void UpdateState()
-    {
-        // TODO: Need to recalculate available pool
         UpdateTilesAvailableForOwnership();
     }
 
@@ -62,7 +57,7 @@ public partial class City : Node2D
                     .GetSurroundingTiles(tile.Coords)
                     .ToList()
                     .Where(t =>
-                        t.CityOwner != this
+                        t.CityOwner is null
                         && !tilesAvailableForOwnership.Contains(t)
                         && (
                             t.TerrainType == TerrainType.Plains
@@ -72,6 +67,6 @@ public partial class City : Node2D
                     )
             );
         }
-        TilesAvailableForOwnership = [.. tilesAvailableForOwnership];
+        TilesAvailableForOwnership = tilesAvailableForOwnership;
     }
 }

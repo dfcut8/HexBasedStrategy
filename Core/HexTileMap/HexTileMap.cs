@@ -44,6 +44,8 @@ public partial class HexTileMap : Node2D
 
     private readonly Dictionary<Vector2I, Hex> mapData = [];
 
+    private List<Vector2I> coordsWithHexOverlayCreated = [];
+
     private readonly Dictionary<TerrainType, Vector2I> terrainToTextureCoords = new()
     {
         [TerrainType.Plains] = new(0, 0),
@@ -244,7 +246,6 @@ public partial class HexTileMap : Node2D
             mapData[coords].CityOwner = city;
             AddChild(city);
             MarkAllTilesInRadiusAsOwnedByCity(city, 1);
-            city.UpdateCityInfo();
             city.UpdateState();
         }
         return city;
@@ -330,7 +331,7 @@ public partial class HexTileMap : Node2D
             var hexes = radiusToHexMap[i];
             foreach (var hex in hexes)
             {
-                if (hex.CityOwner != city)
+                if (hex.CityOwner is null)
                 {
                     CreateHexOverlayAtTile(hex.Coords, i.ToString(), city.OwnerCiv.Color);
                     hex.CityOwner = city;
@@ -349,6 +350,10 @@ public partial class HexTileMap : Node2D
 
     private void CreateHexOverlayAtTile(Vector2I coords, string text, Color color)
     {
+        if (coordsWithHexOverlayCreated.Contains(coords))
+        {
+            return;
+        }
         var hexOverlay = HexOverlayScene?.Instantiate() as HexOverlay;
         if (hexOverlay == null)
         {
@@ -359,18 +364,7 @@ public partial class HexTileMap : Node2D
         AddChild(hexOverlay);
         hexOverlay?.UpdateLabel(text);
         hexOverlay?.UpdateColor(color);
-    }
-
-    private void UpdateCivOwnedHexes(Civilization civ)
-    {
-        foreach (var city in civ.Cities)
-        {
-            foreach (var h in city.TilesOwned)
-            {
-                // TODO
-                GD.Print("Painting");
-            }
-        }
+        coordsWithHexOverlayCreated.Add(coords);
     }
 
     public IReadOnlyList<Hex> GetSurroundingTiles(Vector2I center)
