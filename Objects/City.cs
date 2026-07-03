@@ -16,6 +16,7 @@ public partial class City : Node2D
     public int Population { get; set; }
     public int Production { get; set; }
     public int Food { get; set; }
+    public int HarvestedFood { get; set; }
 
     private Label? label;
     private Sprite2D? sprite;
@@ -32,17 +33,20 @@ public partial class City : Node2D
 
     public override string ToString()
     {
-        return $"[City] CityName={CityName}, OwnerCiv={OwnerCiv}, Center={Center}, TilesOwned={TilesOwned.Count}, TilesAvailableForOwnership={TilesAvailableForOwnership.Count}";
+        return $"[City] CityName={CityName}, OwnerCiv={OwnerCiv}, Center={Center}, TilesOwned={TilesOwned.Count}, TilesAvailableForOwnership={TilesAvailableForOwnership.Count}, HarvestedFood={HarvestedFood}";
     }
 
     public void UpdateState()
     {
+        Production = 0;
+        Food = 0;
         foreach (var tile in TilesOwned)
         {
             Production += tile.Production;
             Food += tile.Food;
             Population = TilesOwned.Count;
         }
+        HarvestedFood += Food;
         UpdateTilesAvailableForOwnership();
     }
 
