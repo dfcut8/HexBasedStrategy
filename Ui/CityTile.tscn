@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://cydg5dhufkf0m"]
 
 [ext_resource type="Script" uid="uid://ctyy5bq33ri4n" path="res://Ui/CityTile.cs" id="1_qsas6"]
+[ext_resource type="PackedScene" uid="uid://b4pkgsopg4t0" path="res://Ui/UnitBuildButton.tscn" id="2_ed7rj"]
 
 [sub_resource type="CompressedTexture2D" id="CompressedTexture2D_b2dtf"]
 load_path = "res://.godot/imported/City.jpg-59554236ffd0e301f23e9f2605047016.ctex"
@@ -16,6 +17,7 @@ grow_horizontal = 2
 grow_vertical = 2
 size_flags_vertical = 3
 script = ExtResource("1_qsas6")
+UnitBuildButtonScene = ExtResource("2_ed7rj")
 
 [node name="Panel" type="Panel" parent="." unique_id=1717007148]
 custom_minimum_size = Vector2(450, 450)
@@ -110,12 +112,12 @@ theme_override_font_sizes/font_size = 26
 text = "Units:"
 horizontal_alignment = 1
 
-[node name="AvailableUnitsContainer" type="ScrollContainer" parent="Panel/Main/Units" unique_id=1747864022]
-unique_name_in_owner = true
+[node name="AvailableUnitsScrollContainer" type="ScrollContainer" parent="Panel/Main/Units" unique_id=1747864022]
 custom_minimum_size = Vector2(0, 120)
 layout_mode = 2
 
-[node name="HBoxContainer" type="HBoxContainer" parent="Panel/Main/Units/AvailableUnitsContainer" unique_id=1696864850]
+[node name="AvailableUnitsContainer" type="HBoxContainer" parent="Panel/Main/Units/AvailableUnitsScrollContainer" unique_id=1696864850]
+unique_name_in_owner = true
 layout_mode = 2
 
 [node name="Queue" type="VBoxContainer" parent="Panel/Main" unique_id=1327356227]

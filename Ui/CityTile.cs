@@ -1,17 +1,21 @@
+using System.Collections.Generic;
 using Godot;
 using HexBasedStrategy.Core;
+using HexBasedStrategy.Data.Units;
 using HexBasedStrategy.Objects;
 
 namespace HexBasedStrategy.Ui;
 
 public partial class CityTile : Control
 {
+    [Export]
+    public PackedScene? UnitBuildButtonScene { get; set; }
     public City? City { get; set; }
     private Label? name;
     private Label? population;
     private Label? production;
     private Label? food;
-    private ScrollContainer? availableUnitsContainer;
+    private HBoxContainer? availableUnitsContainer;
 
     public override void _Ready()
     {
@@ -19,7 +23,7 @@ public partial class CityTile : Control
         production = GetNode<Label>("%Production/Value");
         population = GetNode<Label>("%Population/Value");
         food = GetNode<Label>("%Food/Value");
-        availableUnitsContainer = GetNode<ScrollContainer>("%AvailableUnitsContainer");
+        availableUnitsContainer = GetNode<HBoxContainer>("%AvailableUnitsContainer");
     }
 
     public override void _Process(double delta) { }
@@ -39,5 +43,22 @@ public partial class CityTile : Control
         production?.Text = City.Production.ToString();
         population?.Text = City.Population.ToString();
         food?.Text = City.Food.ToString();
+        if (availableUnitsContainer?.GetChildCount() <= 0)
+        {
+            UpdateUnitContainer(City.OwnerCiv.AvailableUnits);
+        }
+    }
+
+    private void UpdateUnitContainer(List<UnitData> units)
+    {
+        if (UnitBuildButtonScene is not null)
+        {
+            foreach (var ud in units)
+            {
+                var unitButton = UnitBuildButtonScene.Instantiate<UnitBuildButton>();
+                unitButton.UnitData = ud;
+                availableUnitsContainer?.AddChild(unitButton);
+            }
+        }
     }
 }

@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using Godot;
 using HexBasedStrategy.Core.States;
 using HexBasedStrategy.Data;
+using HexBasedStrategy.Data.Units;
 using HexBasedStrategy.Objects;
 using HexBasedStrategy.Systems.CityGrowth;
 using HexBasedStrategy.Ui;
@@ -12,6 +13,9 @@ public partial class Level : Node
 {
     [Export]
     private CivilizationData[] CivilizationDataList { get; set; } = [];
+
+    [Export]
+    private UnitData[] BaseUnitsDataList { get; set; } = [];
 
     [Export]
     private CityGrowthSystemType cityGrowthType;
@@ -51,6 +55,7 @@ public partial class Level : Node
                 Color = cd.Color,
                 Name = cd.Name,
                 CityNames = [.. cd.CityNames],
+                AvailableUnits = [.. BaseUnitsDataList],
             };
             State.Civilizations.Add(civ);
         }

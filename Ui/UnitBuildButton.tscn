@@ -1,10 +1,8 @@
 [gd_scene format=3 uid="uid://b4pkgsopg4t0"]
 
 [ext_resource type="Script" uid="uid://dw71nwx7nrbh6" path="res://Ui/UnitBuildButton.cs" id="1_bmv67"]
-[ext_resource type="Texture2D" uid="uid://bbkbfbodlpvhp" path="res://Assets/Textures/Units/Settler.png" id="1_oufak"]
 
 [node name="UnitBuildButton" type="TextureButton" unique_id=965872674]
 offset_right = 8.0
 offset_bottom = 8.0
-texture_normal = ExtResource("1_oufak")
 script = ExtResource("1_bmv67")

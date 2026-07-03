@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="UnitData" format=3 uid="uid://qg4f5mpmr05e"]
+
+[ext_resource type="Texture2D" uid="uid://bbkbfbodlpvhp" path="res://Assets/Textures/Units/Settler.png" id="1_ct2xr"]
+[ext_resource type="Script" uid="uid://q0k2w78m16dq" path="res://Data/Units/UnitData.cs" id="1_w0k87"]
+
+[resource]
+script = ExtResource("1_w0k87")
+UnitName = "Settler"
+UnitTexture = ExtResource("1_ct2xr")
+Speed = 3
+HitPoints = 2
+metadata/_custom_type_script = "uid://q0k2w78m16dq"

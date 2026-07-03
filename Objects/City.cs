@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Godot;
 using HexBasedStrategy.Core;
+using HexBasedStrategy.Data.Units;
 
 namespace HexBasedStrategy.Objects;
 

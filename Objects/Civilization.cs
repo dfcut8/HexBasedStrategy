@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Godot;
+using HexBasedStrategy.Data.Units;
 
 namespace HexBasedStrategy.Objects;
 
@@ -12,6 +13,7 @@ public class Civilization
     public Color Color { get; set; } = Colors.White;
     public string Name { get; set; } = String.Empty;
     public bool PlayerControlled { get; set; } = false;
+    public List<UnitData> AvailableUnits { get; set; } = [];
     public HashSet<string> CityNames
     {
         get;
