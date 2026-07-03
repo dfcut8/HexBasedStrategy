@@ -23,10 +23,10 @@ layout_mode = 1
 anchors_preset = 9
 anchor_bottom = 1.0
 offset_right = 450.0
-offset_bottom = 450.0
+offset_bottom = 850.0
 grow_vertical = 2
 
-[node name="VBoxContainer" type="VBoxContainer" parent="Panel" unique_id=475690140]
+[node name="Main" type="VBoxContainer" parent="Panel" unique_id=475690140]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -34,62 +34,101 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="Image" type="TextureRect" parent="Panel/VBoxContainer" unique_id=1259522860]
+[node name="Information" type="MarginContainer" parent="Panel/Main" unique_id=1436729439]
+layout_mode = 2
+theme_override_constants/margin_bottom = 20
+
+[node name="Information" type="VBoxContainer" parent="Panel/Main/Information" unique_id=1560297194]
+layout_mode = 2
+
+[node name="Image" type="TextureRect" parent="Panel/Main/Information/Information" unique_id=1259522860]
 custom_minimum_size = Vector2(0, 248)
 layout_mode = 2
 texture = SubResource("CompressedTexture2D_b2dtf")
 expand_mode = 1
 
-[node name="MarginContainer" type="MarginContainer" parent="Panel/VBoxContainer" unique_id=96065662]
+[node name="MarginContainer" type="MarginContainer" parent="Panel/Main/Information/Information" unique_id=96065662]
 layout_mode = 2
 
-[node name="VBoxContainer" type="VBoxContainer" parent="Panel/VBoxContainer/MarginContainer" unique_id=1263548553]
+[node name="VBoxContainer" type="VBoxContainer" parent="Panel/Main/Information/Information/MarginContainer" unique_id=1263548553]
 layout_mode = 2
 
-[node name="Name" type="HBoxContainer" parent="Panel/VBoxContainer/MarginContainer/VBoxContainer" unique_id=1557393860]
+[node name="Name" type="HBoxContainer" parent="Panel/Main/Information/Information/MarginContainer/VBoxContainer" unique_id=1557393860]
 unique_name_in_owner = true
 layout_mode = 2
 
-[node name="Label" type="Label" parent="Panel/VBoxContainer/MarginContainer/VBoxContainer/Name" unique_id=1396656530]
+[node name="Label" type="Label" parent="Panel/Main/Information/Information/MarginContainer/VBoxContainer/Name" unique_id=1396656530]
 layout_mode = 2
 text = "Name:"
 
-[node name="Value" type="Label" parent="Panel/VBoxContainer/MarginContainer/VBoxContainer/Name" unique_id=344759467]
+[node name="Value" type="Label" parent="Panel/Main/Information/Information/MarginContainer/VBoxContainer/Name" unique_id=344759467]
 layout_mode = 2
 text = "XXX"
 
-[node name="Population" type="HBoxContainer" parent="Panel/VBoxContainer/MarginContainer/VBoxContainer" unique_id=1348481711]
+[node name="Population" type="HBoxContainer" parent="Panel/Main/Information/Information/MarginContainer/VBoxContainer" unique_id=1348481711]
 unique_name_in_owner = true
 layout_mode = 2
 
-[node name="Label" type="Label" parent="Panel/VBoxContainer/MarginContainer/VBoxContainer/Population" unique_id=420896058]
+[node name="Label" type="Label" parent="Panel/Main/Information/Information/MarginContainer/VBoxContainer/Population" unique_id=420896058]
 layout_mode = 2
 text = "Population:"
 
-[node name="Value" type="Label" parent="Panel/VBoxContainer/MarginContainer/VBoxContainer/Population" unique_id=1481498722]
+[node name="Value" type="Label" parent="Panel/Main/Information/Information/MarginContainer/VBoxContainer/Population" unique_id=1481498722]
 layout_mode = 2
 text = "XXX"
 
-[node name="Production" type="HBoxContainer" parent="Panel/VBoxContainer/MarginContainer/VBoxContainer" unique_id=1766589809]
+[node name="Production" type="HBoxContainer" parent="Panel/Main/Information/Information/MarginContainer/VBoxContainer" unique_id=1766589809]
 unique_name_in_owner = true
 layout_mode = 2
 
-[node name="Label" type="Label" parent="Panel/VBoxContainer/MarginContainer/VBoxContainer/Production" unique_id=1145269077]
+[node name="Label" type="Label" parent="Panel/Main/Information/Information/MarginContainer/VBoxContainer/Production" unique_id=1145269077]
 layout_mode = 2
 text = "Production:"
 
-[node name="Value" type="Label" parent="Panel/VBoxContainer/MarginContainer/VBoxContainer/Production" unique_id=1837899484]
+[node name="Value" type="Label" parent="Panel/Main/Information/Information/MarginContainer/VBoxContainer/Production" unique_id=1837899484]
 layout_mode = 2
 text = "XXX"
 
-[node name="Food" type="HBoxContainer" parent="Panel/VBoxContainer/MarginContainer/VBoxContainer" unique_id=1221240597]
+[node name="Food" type="HBoxContainer" parent="Panel/Main/Information/Information/MarginContainer/VBoxContainer" unique_id=1221240597]
 unique_name_in_owner = true
 layout_mode = 2
 
-[node name="Label" type="Label" parent="Panel/VBoxContainer/MarginContainer/VBoxContainer/Food" unique_id=74567607]
+[node name="Label" type="Label" parent="Panel/Main/Information/Information/MarginContainer/VBoxContainer/Food" unique_id=74567607]
 layout_mode = 2
 text = "Food:"
 
-[node name="Value" type="Label" parent="Panel/VBoxContainer/MarginContainer/VBoxContainer/Food" unique_id=1262788873]
+[node name="Value" type="Label" parent="Panel/Main/Information/Information/MarginContainer/VBoxContainer/Food" unique_id=1262788873]
 layout_mode = 2
 text = "XXX"
+
+[node name="Units" type="VBoxContainer" parent="Panel/Main" unique_id=312237202]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Panel/Main/Units" unique_id=245984036]
+layout_mode = 2
+theme_override_font_sizes/font_size = 26
+text = "Units:"
+horizontal_alignment = 1
+
+[node name="ScrollContainer" type="ScrollContainer" parent="Panel/Main/Units" unique_id=1747864022]
+custom_minimum_size = Vector2(0, 120)
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Panel/Main/Units/ScrollContainer" unique_id=1696864850]
+layout_mode = 2
+
+[node name="Queue" type="VBoxContainer" parent="Panel/Main" unique_id=1327356227]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Panel/Main/Queue" unique_id=1317723066]
+layout_mode = 2
+theme_override_font_sizes/font_size = 26
+text = "Queue:"
+horizontal_alignment = 1
+
+[node name="ScrollContainer" type="ScrollContainer" parent="Panel/Main/Queue" unique_id=726274427]
+custom_minimum_size = Vector2(0, 120)
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Panel/Main/Queue/ScrollContainer" unique_id=1348940925]
+layout_mode = 2
