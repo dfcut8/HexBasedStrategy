@@ -11,6 +11,7 @@ public partial class CityTile : Control
     private Label? population;
     private Label? production;
     private Label? food;
+    private ScrollContainer? availableUnitsContainer;
 
     public override void _Ready()
     {
@@ -18,6 +19,7 @@ public partial class CityTile : Control
         production = GetNode<Label>("%Production/Value");
         population = GetNode<Label>("%Population/Value");
         food = GetNode<Label>("%Food/Value");
+        availableUnitsContainer = GetNode<ScrollContainer>("%AvailableUnitsContainer");
     }
 
     public override void _Process(double delta) { }

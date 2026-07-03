@@ -110,11 +110,12 @@ theme_override_font_sizes/font_size = 26
 text = "Units:"
 horizontal_alignment = 1
 
-[node name="ScrollContainer" type="ScrollContainer" parent="Panel/Main/Units" unique_id=1747864022]
+[node name="AvailableUnitsContainer" type="ScrollContainer" parent="Panel/Main/Units" unique_id=1747864022]
+unique_name_in_owner = true
 custom_minimum_size = Vector2(0, 120)
 layout_mode = 2
 
-[node name="HBoxContainer" type="HBoxContainer" parent="Panel/Main/Units/ScrollContainer" unique_id=1696864850]
+[node name="HBoxContainer" type="HBoxContainer" parent="Panel/Main/Units/AvailableUnitsContainer" unique_id=1696864850]
 layout_mode = 2
 
 [node name="Queue" type="VBoxContainer" parent="Panel/Main" unique_id=1327356227]

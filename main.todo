@@ -1,2 +1,5 @@
-Generate build buttons dynamically. Probably for now just have a list of all available units in some resources...
-Refactor everything to not use inheritance and use composition instead.
+Current:
+    ☐ Create a basic visual button layout
+    ☐ Generate build buttons dynamically. Probably for now just have a list of all available units in some resources...
+Future:
+    ☐ Refactor everything to not use inheritance and use composition instead.
