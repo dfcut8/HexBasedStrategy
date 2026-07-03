@@ -3,4 +3,4 @@ using Godot;
 
 namespace HexBasedStrategy.Objects.Units;
 
-public partial class BaseUnit : Node2D { }
+public partial class Warrior : BaseUnit { }

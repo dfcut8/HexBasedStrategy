@@ -2,8 +2,10 @@
 
 [ext_resource type="PackedScene" uid="uid://dfp7qnie4efhn" path="res://Objects/Units/BaseUnit.tscn" id="1_u0r38"]
 [ext_resource type="Texture2D" uid="uid://bti5nwg5brb34" path="res://Assets/Textures/Units/Warrior.png" id="2_ts7wr"]
+[ext_resource type="Script" uid="uid://0aomlrjstnje" path="res://Objects/Units/Warrior.cs" id="2_xup10"]
 
 [node name="Warrior" unique_id=1948529260 instance=ExtResource("1_u0r38")]
+script = ExtResource("2_xup10")
 
 [node name="Sprite2D" parent="." index="0" unique_id=1051490794]
 texture = ExtResource("2_ts7wr")
