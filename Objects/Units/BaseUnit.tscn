@@ -1,0 +1,19 @@
+[gd_scene format=3 uid="uid://dfp7qnie4efhn"]
+
+[ext_resource type="Script" uid="uid://bf5bvocfksilp" path="res://Objects/Units/BaseUnit.cs" id="1_mbv1h"]
+[ext_resource type="Texture2D" uid="uid://bbkbfbodlpvhp" path="res://Assets/Textures/Units/Settler.png" id="1_yed2n"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_87wjg"]
+radius = 35.0
+
+[node name="BaseUnit" type="Node2D" unique_id=1948529260]
+script = ExtResource("1_mbv1h")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1051490794]
+texture = ExtResource("1_yed2n")
+offset = Vector2(-1, 2)
+
+[node name="Area2D" type="Area2D" parent="Sprite2D" unique_id=368384499]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Sprite2D/Area2D" unique_id=657431057]
+shape = SubResource("CircleShape2D_87wjg")

@@ -1,0 +1,5 @@
+[gd_scene format=3 uid="uid://b40jjmika6u7y"]
+
+[ext_resource type="PackedScene" uid="uid://dfp7qnie4efhn" path="res://Objects/Units/BaseUnit.tscn" id="1_hvjs1"]
+
+[node name="Settler" unique_id=1948529260 instance=ExtResource("1_hvjs1")]
