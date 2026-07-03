@@ -1,6 +1,6 @@
 [gd_resource type="Resource" script_class="CivilizationData" format=3 uid="uid://ccbng25gq40of"]
 
-[ext_resource type="Script" uid="uid://ddaq2kxha5vtp" path="res://Data/CivilizationData.cs" id="1_qt2l1"]
+[ext_resource type="Script" uid="uid://ddaq2kxha5vtp" path="res://Data/Civilizations/CivilizationData.cs" id="1_qt2l1"]
 
 [resource]
 script = ExtResource("1_qt2l1")
