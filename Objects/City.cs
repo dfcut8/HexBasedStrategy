@@ -23,7 +23,7 @@ public partial class City : Node2D
     // Build queue
     public Queue<UnitData> BuildQueue { get; set; } = [];
     public UnitData? BuildCurrent { get; set; }
-    public int ProductionTracker;
+    public int ProductionTracker { get; set; }
 
     private Label? label;
     private Sprite2D? sprite;
@@ -54,7 +54,24 @@ public partial class City : Node2D
             Population = TilesOwned.Count;
         }
         HarvestedFood += Food;
+        ProductionTracker += Production;
         UpdateTilesAvailableForOwnership();
+        UpdateCurrentBuildingUnitInQueue();
+    }
+
+    private void UpdateCurrentBuildingUnitInQueue()
+    {
+        if (BuildCurrent?.Cost <= ProductionTracker)
+        {
+            if (BuildQueue.Count <= 1)
+            {
+                BuildCurrent = null;
+            }
+            else
+            {
+                BuildCurrent = BuildQueue.Dequeue();
+            }
+        }
     }
 
     private void UpdateTilesAvailableForOwnership()
@@ -84,6 +101,10 @@ public partial class City : Node2D
     public bool AddToBuildQueue(UnitData data)
     {
         var success = false;
+        if (BuildCurrent is null)
+        {
+            BuildCurrent = data;
+        }
         if (BuildQueue.Count < GlobalConstants.CityBuildQueueMaxSize)
         {
             BuildQueue.Enqueue(data);

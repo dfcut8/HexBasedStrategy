@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Numerics;
 using Godot;
 using HexBasedStrategy.Core;
 using HexBasedStrategy.Data.Units;
@@ -66,6 +67,7 @@ public partial class CityTile : Control
         {
             UpdateQueueContainer(City.BuildQueue);
         }
+        City?.UpdateState();
     }
 
     private void UpdateUnitContainer(List<UnitData> units)
@@ -101,7 +103,26 @@ public partial class CityTile : Control
 
     private void UpdateQueueContainer(Queue<UnitData> units)
     {
-        for (var i = 0; i < GlobalConstants.CityBuildQueueMaxSize; i++)
+        if (City is not null)
+        {
+            // Update first slot to current building unit if not null.
+            var building = City.BuildCurrent;
+            if (building is not null)
+            {
+                var slot = queueSlots[0];
+                slot.unitData = building;
+                slot.Visible = true;
+                double value = (double)City.ProductionTracker / slot.unitData.Cost * 100;
+                slot.Refresh((int)value);
+            }
+            else
+            {
+                var slot = queueSlots[0];
+                slot.unitData = null;
+                slot.Visible = false;
+            }
+        }
+        for (var i = 1; i < GlobalConstants.CityBuildQueueMaxSize; i++)
         {
             var unit = units.ElementAtOrDefault(i);
             if (unit is not null)
@@ -109,7 +130,7 @@ public partial class CityTile : Control
                 var slot = queueSlots[i];
                 slot.unitData = unit;
                 slot.Visible = true;
-                slot.Refresh(50);
+                slot.Refresh(0);
             }
         }
     }
