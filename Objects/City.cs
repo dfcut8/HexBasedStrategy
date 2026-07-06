@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Godot;
@@ -18,6 +19,11 @@ public partial class City : Node2D
     public int Production { get; set; }
     public int Food { get; set; }
     public int HarvestedFood { get; set; }
+
+    // Build queue
+    public List<UnitData> BuildQueue { get; set; } = [];
+    public UnitData? BuildCurrent { get; set; }
+    public int ProductionTracker;
 
     private Label? label;
     private Sprite2D? sprite;
@@ -73,5 +79,10 @@ public partial class City : Node2D
             );
         }
         TilesAvailableForOwnership = tilesAvailableForOwnership;
+    }
+
+    public void AddToBuildQueue(UnitData data)
+    {
+        BuildQueue.Add(data);
     }
 }

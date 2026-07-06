@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using Godot;
 using HexBasedStrategy.Core;
@@ -16,6 +17,7 @@ public partial class CityTile : Control
     private Label? production;
     private Label? food;
     private HBoxContainer? availableUnitsContainer;
+    private HBoxContainer? queueContainer;
 
     public override void _Ready()
     {
@@ -24,6 +26,7 @@ public partial class CityTile : Control
         population = GetNode<Label>("%Population/Value");
         food = GetNode<Label>("%Food/Value");
         availableUnitsContainer = GetNode<HBoxContainer>("%AvailableUnitsContainer");
+        queueContainer = GetNode<HBoxContainer>("%QueueContainer");
     }
 
     public override void _Process(double delta) { }
@@ -43,7 +46,14 @@ public partial class CityTile : Control
         production?.Text = City.Production.ToString();
         population?.Text = City.Population.ToString();
         food?.Text = City.Food.ToString();
+
+        // Potential bug related to dynamic nature of available units.
+        // What if we will add more units on some condition later.
         if (availableUnitsContainer?.GetChildCount() <= 0)
+        {
+            UpdateUnitContainer(City.OwnerCiv.AvailableUnits);
+        }
+        if (City?.BuildQueue.Count > 0)
         {
             UpdateUnitContainer(City.OwnerCiv.AvailableUnits);
         }
@@ -58,7 +68,24 @@ public partial class CityTile : Control
                 var unitButton = UnitBuildButtonScene.Instantiate<UnitBuildButton>();
                 unitButton.UnitData = ud;
                 availableUnitsContainer?.AddChild(unitButton);
+                unitButton.UnitButtonPressed += OnUnitButtonPressed;
             }
         }
+    }
+
+    private void UpdateQueueContainer(List<UnitData> units)
+    {
+        foreach (var ud in units)
+        {
+            queueContainer.AddChild();
+        }
+    }
+
+    private void OnUnitButtonPressed(UnitData data)
+    {
+        GD.Print(
+            $"Processing 'UnitButtonPressed' event: CityName={City?.CityName}, UnitName={data.UnitName}"
+        );
+        City?.AddToBuildQueue(data);
     }
 }

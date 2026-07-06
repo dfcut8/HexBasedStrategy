@@ -13,6 +13,9 @@ public partial class UnitData : Resource
     public required Texture2D UnitTexture { get; set; }
 
     [Export]
+    public required int Cost;
+
+    [Export]
     public required int Speed { get; set; }
 
     [Export]
