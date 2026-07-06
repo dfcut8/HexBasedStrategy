@@ -67,7 +67,7 @@ public partial class CityTile : Control
         {
             UpdateQueueContainer(City.BuildQueue);
         }
-        City?.UpdateState();
+        // City?.UpdateState();
     }
 
     private void UpdateUnitContainer(List<UnitData> units)

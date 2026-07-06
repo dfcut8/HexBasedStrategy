@@ -480,6 +480,7 @@ public partial class HexTileMap : Node2D
         GD.Print("Updating cities on a map.");
         foreach (var city in cities)
         {
+            city.UpdateState();
             foreach (var tile in city.TilesOwned)
             {
                 CreateHexOverlayAtTile(

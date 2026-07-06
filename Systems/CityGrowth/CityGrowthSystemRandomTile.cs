@@ -21,7 +21,7 @@ public partial class CityGrowthSystemRandomTile : ICityGrowthSystem
         {
             if (!DoesCityHaveEnoughFoodToGrow(c))
             {
-                c.UpdateState();
+                // c.UpdateState();
                 continue;
             }
             var availableTiles = c.TilesAvailableForOwnership;
@@ -34,7 +34,7 @@ public partial class CityGrowthSystemRandomTile : ICityGrowthSystem
             selected.CityOwner = c;
             c.TilesOwned.Add(selected);
             c.HarvestedFood = 0;
-            c.UpdateState();
+            // c.UpdateState();
             GD.Print($"Selected hex for expansion: {selected}");
         }
     }
