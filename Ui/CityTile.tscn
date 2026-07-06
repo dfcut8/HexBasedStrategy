@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" uid="uid://ctyy5bq33ri4n" path="res://Ui/CityTile.cs" id="1_qsas6"]
 [ext_resource type="PackedScene" uid="uid://b4pkgsopg4t0" path="res://Ui/UnitBuildButton.tscn" id="2_ed7rj"]
+[ext_resource type="PackedScene" uid="uid://5xm163vmdnvn" path="res://Ui/UniBuildProgressTile.tscn" id="3_bj5de"]
 
 [sub_resource type="CompressedTexture2D" id="CompressedTexture2D_b2dtf"]
 load_path = "res://.godot/imported/City.jpg-59554236ffd0e301f23e9f2605047016.ctex"
@@ -18,6 +19,7 @@ grow_vertical = 2
 size_flags_vertical = 3
 script = ExtResource("1_qsas6")
 UnitBuildButtonScene = ExtResource("2_ed7rj")
+UnitBuildProgressTile = ExtResource("3_bj5de")
 
 [node name="Panel" type="Panel" parent="." unique_id=1717007148]
 custom_minimum_size = Vector2(450, 450)

@@ -11,6 +11,9 @@ public partial class CityTile : Control
 {
     [Export]
     public PackedScene? UnitBuildButtonScene { get; set; }
+
+    [Export]
+    public PackedScene? UnitBuildProgressTile { get; set; }
     public City? City { get; set; }
     private Label? name;
     private Label? population;
@@ -55,7 +58,7 @@ public partial class CityTile : Control
         }
         if (City?.BuildQueue.Count > 0)
         {
-            UpdateUnitContainer(City.OwnerCiv.AvailableUnits);
+            UpdateQueueContainer(City.BuildQueue);
         }
     }
 
@@ -75,9 +78,16 @@ public partial class CityTile : Control
 
     private void UpdateQueueContainer(List<UnitData> units)
     {
+        if (UnitBuildProgressTile is null)
+        {
+            GD.PrintErr("UniBuildProgressTile must be defined.");
+            GetTree().Quit(1);
+        }
         foreach (var ud in units)
         {
-            queueContainer.AddChild();
+            var tile = UnitBuildProgressTile?.Instantiate<UniBuildProgressTile>();
+            tile?.unitData = ud;
+            queueContainer?.AddChild(tile);
         }
     }
 
@@ -87,5 +97,6 @@ public partial class CityTile : Control
             $"Processing 'UnitButtonPressed' event: CityName={City?.CityName}, UnitName={data.UnitName}"
         );
         City?.AddToBuildQueue(data);
+        Refresh();
     }
 }

@@ -1,0 +1,13 @@
+[gd_scene format=3 uid="uid://5xm163vmdnvn"]
+
+[ext_resource type="Texture2D" uid="uid://bbkbfbodlpvhp" path="res://Assets/Textures/Units/Settler.png" id="1_1b54m"]
+[ext_resource type="Script" uid="uid://drim67b2bp72b" path="res://Ui/UniBuildProgressTile.cs" id="2_we3vt"]
+
+[node name="UniBuildProgressTile" type="TextureProgressBar" unique_id=1458749896]
+offset_right = 40.0
+offset_bottom = 40.0
+fill_mode = 4
+texture_under = ExtResource("1_1b54m")
+texture_progress = ExtResource("1_1b54m")
+tint_under = Color(0.34901962, 0.34901962, 0.34901962, 1)
+script = ExtResource("2_we3vt")
