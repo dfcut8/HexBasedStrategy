@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Godot;
 using HexBasedStrategy.Core;
 using HexBasedStrategy.Data.Units;
@@ -21,6 +22,7 @@ public partial class CityTile : Control
     private Label? food;
     private HBoxContainer? availableUnitsContainer;
     private HBoxContainer? queueContainer;
+    private List<UniBuildProgressTile> queueSlots = [];
 
     public override void _Ready()
     {
@@ -80,26 +82,35 @@ public partial class CityTile : Control
         }
     }
 
-    private static void PrePopulateQueueContainer(
+    private void PrePopulateQueueContainer(
         HBoxContainer queueContainer,
         PackedScene UnitBuildProgressTile
     )
     {
         for (var i = 0; i < GlobalConstants.CityBuildQueueMaxSize; i++)
         {
-            var tile = UnitBuildProgressTile?.Instantiate<UniBuildProgressTile>();
-            tile?.Visible = false;
-            queueContainer.AddChild(tile);
+            var slot = UnitBuildProgressTile?.Instantiate<UniBuildProgressTile>();
+            if (slot is not null)
+            {
+                slot.Visible = false;
+                queueContainer.AddChild(slot);
+                queueSlots.Add(slot);
+            }
         }
     }
 
     private void UpdateQueueContainer(Queue<UnitData> units)
     {
-        foreach (var ud in units)
+        for (var i = 0; i < GlobalConstants.CityBuildQueueMaxSize; i++)
         {
-            var tile = UnitBuildProgressTile?.Instantiate<UniBuildProgressTile>();
-            tile?.unitData = ud;
-            queueContainer?.AddChild(tile);
+            var unit = units.ElementAtOrDefault(i);
+            if (unit is not null)
+            {
+                var slot = queueSlots[i];
+                slot.unitData = unit;
+                slot.Visible = true;
+                slot.Refresh(50);
+            }
         }
     }
 

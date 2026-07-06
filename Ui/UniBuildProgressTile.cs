@@ -11,14 +11,15 @@ public partial class UniBuildProgressTile : TextureProgressBar
 
     public override void _Ready()
     {
-        FillMode = (int)FillModeEnum.Clockwise;
-        TextureUnder = unitData?.UnitTexture;
-        TintUnder = new Color("595959");
-        TextureProgress = unitData?.UnitTexture;
+        Refresh(0);
     }
 
     public void Refresh(int value)
     {
+        FillMode = (int)FillModeEnum.Clockwise;
+        TextureUnder = unitData?.UnitTexture;
+        TintUnder = new Color("595959");
+        TextureProgress = unitData?.UnitTexture;
         Value = value;
     }
 }
