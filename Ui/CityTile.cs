@@ -10,7 +10,7 @@ namespace HexBasedStrategy.Ui;
 public partial class CityTile : Control
 {
     [Export]
-    public PackedScene? UnitBuildButtonScene { get; set; }
+    private PackedScene? UnitBuildButtonScene { get; set; }
 
     [Export]
     public PackedScene? UnitBuildProgressTile { get; set; }
@@ -30,6 +30,10 @@ public partial class CityTile : Control
         food = GetNode<Label>("%Food/Value");
         availableUnitsContainer = GetNode<HBoxContainer>("%AvailableUnitsContainer");
         queueContainer = GetNode<HBoxContainer>("%QueueContainer");
+        if (queueContainer is not null && UnitBuildProgressTile is not null)
+        {
+            PrePopulateQueueContainer(queueContainer, UnitBuildProgressTile);
+        }
     }
 
     public override void _Process(double delta) { }
@@ -76,13 +80,21 @@ public partial class CityTile : Control
         }
     }
 
-    private void UpdateQueueContainer(List<UnitData> units)
+    private static void PrePopulateQueueContainer(
+        HBoxContainer queueContainer,
+        PackedScene UnitBuildProgressTile
+    )
     {
-        if (UnitBuildProgressTile is null)
+        for (var i = 0; i < GlobalConstants.CityBuildQueueMaxSize; i++)
         {
-            GD.PrintErr("UniBuildProgressTile must be defined.");
-            GetTree().Quit(1);
+            var tile = UnitBuildProgressTile?.Instantiate<UniBuildProgressTile>();
+            tile?.Visible = false;
+            queueContainer.AddChild(tile);
         }
+    }
+
+    private void UpdateQueueContainer(Queue<UnitData> units)
+    {
         foreach (var ud in units)
         {
             var tile = UnitBuildProgressTile?.Instantiate<UniBuildProgressTile>();

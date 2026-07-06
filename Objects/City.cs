@@ -21,7 +21,7 @@ public partial class City : Node2D
     public int HarvestedFood { get; set; }
 
     // Build queue
-    public List<UnitData> BuildQueue { get; set; } = [];
+    public Queue<UnitData> BuildQueue { get; set; } = [];
     public UnitData? BuildCurrent { get; set; }
     public int ProductionTracker;
 
@@ -81,8 +81,14 @@ public partial class City : Node2D
         TilesAvailableForOwnership = tilesAvailableForOwnership;
     }
 
-    public void AddToBuildQueue(UnitData data)
+    public bool AddToBuildQueue(UnitData data)
     {
-        BuildQueue.Add(data);
+        var success = false;
+        if (BuildQueue.Count < GlobalConstants.CityBuildQueueMaxSize)
+        {
+            BuildQueue.Enqueue(data);
+            success = true;
+        }
+        return success;
     }
 }
