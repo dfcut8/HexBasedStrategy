@@ -4,11 +4,15 @@ using System.Linq;
 using Godot;
 using HexBasedStrategy.Core;
 using HexBasedStrategy.Data.Units;
+using HexBasedStrategy.Objects.Units;
 
 namespace HexBasedStrategy.Objects;
 
 public partial class City : Node2D
 {
+    [Export]
+    public PackedScene? BaseUnitScene;
+
     public required string CityName { get; set; }
     public required Civilization OwnerCiv { get; set; }
     public required HexTileMap WorldMap { private get; set; }
@@ -68,6 +72,7 @@ public partial class City : Node2D
         {
             // Means city completed the current construction.
             // At this moment we will just reset production to avoid any issues.
+            SpawnUnit(BuildCurrent);
             if (BuildQueue.Count <= 1)
             {
                 ProductionTracker = 0;
@@ -79,6 +84,18 @@ public partial class City : Node2D
                 ProductionTracker -= BuildCurrent.Cost;
                 BuildCurrent = BuildQueue.Dequeue();
             }
+        }
+    }
+
+    private void SpawnUnit(UnitData data)
+    {
+        var instance = BaseUnitScene?.Instantiate<BaseUnit>();
+        if (instance is not null)
+        {
+            instance.Coords = Center;
+            instance.CivOwner = OwnerCiv;
+            instance.Data = data;
+            AddChild(instance);
         }
     }
 

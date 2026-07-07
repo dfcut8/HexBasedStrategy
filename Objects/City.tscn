@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" uid="uid://bwdnt432ftqqp" path="res://Objects/City.cs" id="1_ht5um"]
 [ext_resource type="Texture2D" uid="uid://cx00cxlr4nrdl" path="res://Assets/Textures/TerrainTypes/City.png" id="1_kk4g3"]
+[ext_resource type="PackedScene" uid="uid://dfp7qnie4efhn" path="res://Objects/Units/BaseUnit.tscn" id="2_ac6ew"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_kk4g3"]
 font_size = 32
@@ -9,6 +10,7 @@ font_color = Color(0, 0, 0, 1)
 
 [node name="City" type="Node2D" unique_id=1133730667]
 script = ExtResource("1_ht5um")
+BaseUnitScene = ExtResource("2_ac6ew")
 
 [node name="Sprite" type="Sprite2D" parent="." unique_id=1843772170]
 texture = ExtResource("1_kk4g3")
