@@ -1,0 +1,103 @@
+[gd_scene format=3 uid="uid://cruounmbx17m3"]
+
+[ext_resource type="Texture2D" uid="uid://be0d0cmpgserm" path="res://Assets/Textures/Units/SettlerImage.png" id="1_qwi16"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_qwi16"]
+font_size = 22
+
+[sub_resource type="LabelSettings" id="LabelSettings_468wu"]
+font_size = 22
+
+[node name="UnitTile" type="Control" unique_id=553341724]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = -1854.0
+offset_bottom = -846.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Panel" type="Panel" parent="." unique_id=1019883974]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Panel" unique_id=873430357]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="TextureRect" type="TextureRect" parent="Panel/VBoxContainer" unique_id=355028680]
+custom_minimum_size = Vector2(450, 250)
+layout_mode = 2
+texture = ExtResource("1_qwi16")
+expand_mode = 1
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Panel/VBoxContainer" unique_id=2026243588]
+layout_mode = 2
+
+[node name="Name" type="HBoxContainer" parent="Panel/VBoxContainer/VBoxContainer" unique_id=516752594]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="Text" type="Label" parent="Panel/VBoxContainer/VBoxContainer/Name" unique_id=1839763495]
+layout_mode = 2
+text = "Name:"
+label_settings = SubResource("LabelSettings_qwi16")
+
+[node name="Value" type="Label" parent="Panel/VBoxContainer/VBoxContainer/Name" unique_id=2045808008]
+layout_mode = 2
+text = "XXX"
+label_settings = SubResource("LabelSettings_468wu")
+
+[node name="Cost" type="HBoxContainer" parent="Panel/VBoxContainer/VBoxContainer" unique_id=312992664]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="Text" type="Label" parent="Panel/VBoxContainer/VBoxContainer/Cost" unique_id=2121507829]
+layout_mode = 2
+text = "Cost:"
+
+[node name="Value" type="Label" parent="Panel/VBoxContainer/VBoxContainer/Cost" unique_id=1100606225]
+layout_mode = 2
+text = "12"
+
+[node name="Speed" type="HBoxContainer" parent="Panel/VBoxContainer/VBoxContainer" unique_id=1902696550]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="Text" type="Label" parent="Panel/VBoxContainer/VBoxContainer/Speed" unique_id=2104469449]
+layout_mode = 2
+text = "Speed:"
+
+[node name="Value" type="Label" parent="Panel/VBoxContainer/VBoxContainer/Speed" unique_id=255010725]
+layout_mode = 2
+text = "2"
+
+[node name="HitPoints" type="HBoxContainer" parent="Panel/VBoxContainer/VBoxContainer" unique_id=557877676]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="Text" type="Label" parent="Panel/VBoxContainer/VBoxContainer/HitPoints" unique_id=1786825946]
+layout_mode = 2
+text = "Hit Points:"
+
+[node name="Value" type="Label" parent="Panel/VBoxContainer/VBoxContainer/HitPoints" unique_id=1407172615]
+layout_mode = 2
+text = "100"
+
+[node name="AttackPower" type="HBoxContainer" parent="Panel/VBoxContainer/VBoxContainer" unique_id=264935538]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="Text" type="Label" parent="Panel/VBoxContainer/VBoxContainer/AttackPower" unique_id=1273395122]
+layout_mode = 2
+text = "Attack Power:"
+
+[node name="Value" type="Label" parent="Panel/VBoxContainer/VBoxContainer/AttackPower" unique_id=1876796232]
+layout_mode = 2
+text = "0"
