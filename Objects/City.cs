@@ -68,22 +68,32 @@ public partial class City : Node2D
 
     private void UpdateCurrentBuildingUnitInQueue()
     {
-        if (BuildCurrent?.Cost <= ProductionTracker)
+        if (ProductionTracker >= BuildCurrent?.Cost)
         {
             // Means city completed the current construction.
             // At this moment we will just reset production to avoid any issues.
             SpawnUnit(BuildCurrent);
-            if (BuildQueue.Count <= 1)
+            ProductionTracker -= BuildCurrent.Cost;
+            if (BuildQueue.Count > 0)
             {
-                ProductionTracker = 0;
-                BuildCurrent = null;
-                BuildQueue.Dequeue();
+                BuildCurrent = BuildQueue.Dequeue();
             }
             else
             {
-                ProductionTracker -= BuildCurrent.Cost;
-                BuildCurrent = BuildQueue.Dequeue();
+                BuildCurrent = null;
+                ProductionTracker = 0;
             }
+            // if (BuildQueue.Count <= 1)
+            // {
+            //     ProductionTracker = 0;
+            //     BuildCurrent = null;
+            //     BuildQueue.Dequeue();
+            // }
+            // else
+            // {
+            //     ProductionTracker -= BuildCurrent.Cost;
+            //     BuildCurrent = BuildQueue.Dequeue();
+            // }
         }
     }
 
@@ -126,13 +136,10 @@ public partial class City : Node2D
     public bool AddToBuildQueue(UnitData data)
     {
         var success = false;
-        if (BuildCurrent is null)
-        {
-            BuildCurrent = data;
-        }
+        BuildQueue.Enqueue(data);
+        BuildCurrent ??= BuildQueue.Dequeue();
         if (BuildQueue.Count < GlobalConstants.CityBuildQueueMaxSize)
         {
-            BuildQueue.Enqueue(data);
             success = true;
         }
         return success;

@@ -119,7 +119,7 @@ public partial class CityTile : Control
         }
         for (var i = 1; i < GlobalConstants.CityBuildQueueMaxSize; i++)
         {
-            var unit = units.ElementAtOrDefault(i);
+            var unit = units.ElementAtOrDefault(i - 1);
             var slot = queueSlots[i];
             if (unit is not null)
             {
