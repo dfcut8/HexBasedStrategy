@@ -54,7 +54,10 @@ public partial class City : Node2D
             Population = TilesOwned.Count;
         }
         HarvestedFood += Food;
-        ProductionTracker += Production;
+        if (BuildCurrent is not null)
+        {
+            ProductionTracker += Production;
+        }
         UpdateTilesAvailableForOwnership();
         UpdateCurrentBuildingUnitInQueue();
     }
@@ -63,9 +66,11 @@ public partial class City : Node2D
     {
         if (BuildCurrent?.Cost <= ProductionTracker)
         {
+            ProductionTracker = 0;
             if (BuildQueue.Count <= 1)
             {
                 BuildCurrent = null;
+                BuildQueue.Dequeue();
             }
             else
             {

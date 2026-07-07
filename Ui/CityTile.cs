@@ -63,11 +63,7 @@ public partial class CityTile : Control
         {
             UpdateUnitContainer(City.OwnerCiv.AvailableUnits);
         }
-        if (City?.BuildQueue.Count > 0)
-        {
-            UpdateQueueContainer(City.BuildQueue);
-        }
-        // City?.UpdateState();
+        UpdateQueueContainer(City.BuildQueue);
     }
 
     private void UpdateUnitContainer(List<UnitData> units)
@@ -105,19 +101,18 @@ public partial class CityTile : Control
     {
         if (City is not null)
         {
+            var slot = queueSlots[0];
             // Update first slot to current building unit if not null.
             var building = City.BuildCurrent;
             if (building is not null)
             {
-                var slot = queueSlots[0];
                 slot.unitData = building;
                 slot.Visible = true;
-                double value = (double)City.ProductionTracker / slot.unitData.Cost * 100;
+                var value = (double)City.ProductionTracker / slot.unitData.Cost * 100;
                 slot.Refresh((int)value);
             }
             else
             {
-                var slot = queueSlots[0];
                 slot.unitData = null;
                 slot.Visible = false;
             }
@@ -125,12 +120,17 @@ public partial class CityTile : Control
         for (var i = 1; i < GlobalConstants.CityBuildQueueMaxSize; i++)
         {
             var unit = units.ElementAtOrDefault(i);
+            var slot = queueSlots[i];
             if (unit is not null)
             {
-                var slot = queueSlots[i];
                 slot.unitData = unit;
                 slot.Visible = true;
                 slot.Refresh(0);
+            }
+            else
+            {
+                slot.unitData = null;
+                slot.Visible = false;
             }
         }
     }
