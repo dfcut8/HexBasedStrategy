@@ -66,14 +66,17 @@ public partial class City : Node2D
     {
         if (BuildCurrent?.Cost <= ProductionTracker)
         {
-            ProductionTracker = 0;
+            // Means city completed the current construction.
+            // At this moment we will just reset production to avoid any issues.
             if (BuildQueue.Count <= 1)
             {
+                ProductionTracker = 0;
                 BuildCurrent = null;
                 BuildQueue.Dequeue();
             }
             else
             {
+                ProductionTracker -= BuildCurrent.Cost;
                 BuildCurrent = BuildQueue.Dequeue();
             }
         }
