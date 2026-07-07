@@ -1,5 +1,6 @@
 [gd_scene format=3 uid="uid://cruounmbx17m3"]
 
+[ext_resource type="Script" uid="uid://cmhtehn4fk0jl" path="res://Ui/UnitTile.cs" id="1_468wu"]
 [ext_resource type="Texture2D" uid="uid://be0d0cmpgserm" path="res://Assets/Textures/Units/SettlerImage.png" id="1_qwi16"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_qwi16"]
@@ -17,6 +18,7 @@ offset_right = -1854.0
 offset_bottom = -846.0
 grow_horizontal = 2
 grow_vertical = 2
+script = ExtResource("1_468wu")
 
 [node name="Panel" type="Panel" parent="." unique_id=1019883974]
 layout_mode = 1

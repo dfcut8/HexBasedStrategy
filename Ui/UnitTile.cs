@@ -6,7 +6,7 @@ namespace HexBasedStrategy.Ui;
 
 public partial class UnitTile : Control
 {
-    public BaseUnit? Unit;
+    public BaseUnit? Unit { get; set; }
     private Label? name;
     private Label? cost;
     private Label? speed;
