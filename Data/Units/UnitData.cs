@@ -23,4 +23,13 @@ public partial class UnitData : Resource
 
     [Export]
     public required int AttackPower { get; set; }
+
+    public int HitPointsCurrent;
+    public int MovePointsCurrent;
+
+    public UnitData()
+    {
+        HitPointsCurrent = HitPoints;
+        MovePointsCurrent = Speed;
+    }
 }
