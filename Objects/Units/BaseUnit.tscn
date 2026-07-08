@@ -14,6 +14,7 @@ texture = ExtResource("1_yed2n")
 offset = Vector2(-1, 2)
 
 [node name="Area2D" type="Area2D" parent="Sprite2D" unique_id=368384499]
+unique_name_in_owner = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Sprite2D/Area2D" unique_id=657431057]
 shape = SubResource("CircleShape2D_87wjg")

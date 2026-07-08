@@ -11,8 +11,11 @@ public partial class BaseUnit : Node2D
 
     public Vector2I Coords { get; set; } = Vector2I.Zero;
     public required Civilization CivOwner { get; set; }
+    public Action<BaseUnit>? Selected;
 
+    private Area2D? area;
     private Sprite2D? sprite;
+    private bool isSelected;
 
     public override void _Ready()
     {
@@ -26,5 +29,23 @@ public partial class BaseUnit : Node2D
         sprite.Texture = Data.UnitTexture;
         sprite.Modulate = new Color(CivOwner.Color);
         Name = Data.UnitName;
+        area = GetNode<Area2D>("%Area2D");
+        area.InputEvent += OnAreaClick;
+    }
+
+    private void OnAreaClick(Node viewport, InputEvent @event, long shapeIdx)
+    {
+        if (@event is InputEventMouseButton mouse)
+        {
+            if (mouse.ButtonMask == MouseButtonMask.Left)
+            {
+                GD.Print($"Unit must be selected");
+                Selected?.Invoke(this);
+                isSelected = true;
+                var color = new Color(CivOwner.Color);
+                color.V -= 0.5f;
+                sprite?.Modulate = color;
+            }
+        }
     }
 }
