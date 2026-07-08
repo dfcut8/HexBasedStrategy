@@ -11,6 +11,7 @@
 [ext_resource type="PackedScene" uid="uid://bro8u8vmbd2o" path="res://Ui/TerrainTile.tscn" id="6_ofirr"]
 [ext_resource type="PackedScene" uid="uid://cydg5dhufkf0m" path="res://Ui/CityTile.tscn" id="10_o1d26"]
 [ext_resource type="PackedScene" uid="uid://cikv26iu2cdef" path="res://Ui/GeneralTile.tscn" id="11_b8wnr"]
+[ext_resource type="PackedScene" uid="uid://cruounmbx17m3" path="res://Ui/UnitTile.tscn" id="12_2dtv2"]
 
 [node name="Level" type="Node" unique_id=692662400]
 script = ExtResource("1_m3clv")
@@ -57,3 +58,6 @@ offset_top = 89.0
 offset_right = 1004.0
 offset_bottom = 89.0
 grow_vertical = 1
+
+[node name="UnitTile" parent="Hud/UiManager" unique_id=553341724 instance=ExtResource("12_2dtv2")]
+unique_name_in_owner = true

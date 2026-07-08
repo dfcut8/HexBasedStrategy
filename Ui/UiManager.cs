@@ -8,6 +8,7 @@ public partial class UiManager : Node2D
     private TerrainTile? terrainTile;
     private CityTile? cityTile;
     private GeneralTile? generalTile;
+    private UnitTile? unitTile;
 
     public override void _Ready()
     {
@@ -16,6 +17,9 @@ public partial class UiManager : Node2D
 
         cityTile = GetNode<CityTile>("%CityTile");
         cityTile.Visible = false;
+
+        unitTile = GetNode<UnitTile>("%UnitTile");
+        unitTile.Visible = false;
 
         generalTile = GetNode<GeneralTile>("%GeneralTile");
 
