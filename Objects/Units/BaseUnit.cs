@@ -1,5 +1,6 @@
 using System;
 using Godot;
+using HexBasedStrategy.Core;
 using HexBasedStrategy.Data.Units;
 
 namespace HexBasedStrategy.Objects.Units;
@@ -11,7 +12,6 @@ public partial class BaseUnit : Node2D
 
     public Vector2I Coords { get; set; } = Vector2I.Zero;
     public required Civilization CivOwner { get; set; }
-    public Action<BaseUnit>? Selected;
 
     private Area2D? area;
     private Sprite2D? sprite;
@@ -40,12 +40,22 @@ public partial class BaseUnit : Node2D
             if (mouse.ButtonMask == MouseButtonMask.Left)
             {
                 GD.Print($"Unit must be selected");
-                Selected?.Invoke(this);
-                isSelected = true;
-                var color = new Color(CivOwner.Color);
-                color.V -= 0.5f;
-                sprite?.Modulate = color;
+                GlobalEvents.RaiseUnitSelected(this);
             }
         }
+    }
+
+    public void Select()
+    {
+        isSelected = true;
+        var color = new Color(CivOwner.Color);
+        color.V -= 0.5f;
+        sprite?.Modulate = color;
+    }
+
+    internal void Deselect()
+    {
+        isSelected = false;
+        sprite?.Modulate = CivOwner.Color;
     }
 }

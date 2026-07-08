@@ -5,6 +5,7 @@ using System.Dynamic;
 using System.Linq;
 using Godot;
 using HexBasedStrategy.Objects;
+using HexBasedStrategy.Objects.Units;
 
 namespace HexBasedStrategy.Core;
 

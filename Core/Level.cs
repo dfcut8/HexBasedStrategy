@@ -1,9 +1,11 @@
+using System;
 using System.Collections.Generic;
 using Godot;
 using HexBasedStrategy.Core.States;
 using HexBasedStrategy.Data;
 using HexBasedStrategy.Data.Units;
 using HexBasedStrategy.Objects;
+using HexBasedStrategy.Objects.Units;
 using HexBasedStrategy.Systems.CityGrowth;
 using HexBasedStrategy.Ui;
 
@@ -21,6 +23,7 @@ public partial class Level : Node
     private CityGrowthSystemType cityGrowthType;
     public Dictionary<Vector2I, City> coordsToCities = [];
     public int currentTurn = 1;
+
     private LevelState State { get; } = new();
     private ICityGrowthSystem? cityGrowthSystem;
     private UiManager? uiManager;
@@ -37,6 +40,27 @@ public partial class Level : Node
         cityGrowthSystem = ICityGrowthSystem.GetInstance(cityGrowthType);
 
         GlobalEvents.EndTurnButtonPressed += OnEndTurnButtonPressed;
+        GlobalEvents.UnitSelected += OnUnitSelected;
+    }
+
+    private void OnUnitSelected(BaseUnit unit)
+    {
+        if (LevelState.CurrentlySelectedUnit is not null && unit == State.CurrentlySelectedUnit)
+        {
+            return;
+        }
+        if (State.CurrentlySelectedUnit is null)
+        {
+            State.CurrentlySelectedUnit = unit;
+            State.CurrentlySelectedUnit.Select();
+        }
+        if (State.CurrentlySelectedUnit is not null && unit != State.CurrentlySelectedUnit)
+        {
+            State.CurrentlySelectedUnit.Deselect();
+            State.CurrentlySelectedUnit = unit;
+            State.CurrentlySelectedUnit.Select();
+        }
+        uiManager?.RefreshUnitTile(unit);
     }
 
     private void OnEndTurnButtonPressed()
@@ -44,6 +68,7 @@ public partial class Level : Node
         cityGrowthSystem?.Process(State.Cities);
         hexTileMap?.UpdateCities(State.Cities);
         uiManager?.UpdateUi(++currentTurn);
+        uiManager?.RefreshUnitTile(State?.CurrentlySelectedUnit);
     }
 
     private void CreateCivilizations(HexTileMap hexTileMap)

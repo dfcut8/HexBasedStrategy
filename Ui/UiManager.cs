@@ -1,5 +1,9 @@
+using System;
+using System.Data;
 using Godot;
 using HexBasedStrategy.Core;
+using HexBasedStrategy.Core.States;
+using HexBasedStrategy.Objects.Units;
 
 namespace HexBasedStrategy.Ui;
 
@@ -43,6 +47,8 @@ public partial class UiManager : Node2D
 
     private void OnHexSelected(Hex? h)
     {
+        LevelState.Current lySelectedUnit = null;
+        RefreshUnitTile();
         if (h is null)
         {
             DisableAllTiles();
@@ -62,5 +68,10 @@ public partial class UiManager : Node2D
             terrainTile?.Hex = h;
             terrainTile?.Refresh();
         }
+    }
+
+    internal void RefreshUnitTile(BaseUnit? unit)
+    {
+        throw new NotImplementedException();
     }
 }
