@@ -12,6 +12,7 @@ public partial class UnitTile : Control
     private Label? speed;
     private Label? hitPoints;
     private Label? attackPower;
+    private TextureRect? picture;
 
     public override void _Ready()
     {
@@ -20,15 +21,18 @@ public partial class UnitTile : Control
         speed = GetNode<Label>("%Speed/Value");
         hitPoints = GetNode<Label>("%HitPoints/Value");
         attackPower = GetNode<Label>("%AttackPower/Value");
+        picture = GetNode<TextureRect>("%Picture");
         Refresh();
     }
 
     public void Refresh()
     {
+        picture?.Texture = Unit?.Data.UnitTexture;
         name?.Text = Unit?.Data.UnitName;
         cost?.Text = Unit?.Data.Cost.ToString();
-        speed?.Text = Unit?.Data.Speed.ToString();
-        hitPoints?.Text = Unit?.Data.HitPoints.ToString();
+        speed?.Text = $"{Unit?.Data.MovePointsCurrent.ToString()}/{Unit?.Data.Speed.ToString()}";
+        hitPoints?.Text =
+            $"{Unit?.Data.HitPointsCurrent.ToString()}/{Unit?.Data.HitPoints.ToString()}";
         attackPower?.Text = Unit?.Data.AttackPower.ToString();
     }
 }
